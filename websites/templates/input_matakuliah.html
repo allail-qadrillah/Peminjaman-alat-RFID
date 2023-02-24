@@ -1,0 +1,46 @@
+{% extends 'templates/sidebar.html' %}
+
+{% block body %}
+<div class="content-wrapper ">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Input Mata Kuliah</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Mata Kuliah</a></li>
+            <li class="breadcrumb-item active">Input Mata Kuliah</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form action="{{ url_for('views.input_matakuliah') }}" , method="POST">
+    <div class="card-body">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Kode Mata Kuliah</label>
+        <input type="text" name="kode" class="form-control" id="exampleInputEmail1"
+          placeholder="masukkan kode matakuliah">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Nama Mata Kuliah</label>
+        <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="masukkan nama matakuliah">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">SKS Mata Kuliah</label>
+        <input type="number" name="sks" class="form-control" id="exampleInputEmail1" placeholder="masukkan sks matakuliah">
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Tambahkan</button>
+    </div>
+  </form>
+</div>
+
+</div>
+
+{% endblock %}

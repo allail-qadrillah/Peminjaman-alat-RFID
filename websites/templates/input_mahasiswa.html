@@ -1,0 +1,53 @@
+{% extends 'templates/sidebar.html' %}
+
+{% block body %}
+<div class="content-wrapper ">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Input Mahasiswa</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Mahasiswa</a></li>
+            <li class="breadcrumb-item active">Input Mahasiswa</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form action="{{ url_for('views.input_mahasiswa') }}" , method="POST">
+    <div class="card-body">
+      <div class="form-group">
+        <label for="exampleInputEmail1">ID Kartu Mahasiswa</label>
+        <input type="number" name="id_kartu" class="form-control" id="exampleInputEmail1" placeholder="masukkan id kartu mahasiswa">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">NIM Mahasiswa</label>
+        <input type="number" name="nim" class="form-control" id="exampleInputEmail1" placeholder="masukkan nim mahasiswa">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Nama Mahasiswa</label>
+        <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="masukkan nama mahasiswa">
+      </div>
+      <div class="form-group">
+        <label for="exampleSelectRounded0">Nama Jurusan</label>
+        <select name="jurusan" class="custom-select rounded-0" id="exampleSelectRounded0">
+          {% for jurusan in data_jurusan %}
+          <option>{{ jurusan['nama_jurusan'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Tambahkan</button>
+    </div>
+  </form>
+</div>
+
+</div>
+
+{% endblock %}

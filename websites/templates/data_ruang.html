@@ -1,0 +1,97 @@
+{% extends 'templates/sidebar.html' %}
+
+{% block link %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper ">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Data Dosen</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Dosen</a></li>
+            <li class="breadcrumb-item active">Data Dosen</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid table-responsive ">
+    <div class="row bg-light mt-12 rounded-6">
+
+      <table class="table table-hover ">
+        <thead class="thead-dark">
+          <tr>
+            <th>No</th>
+            <th>Kode Ruang</th>
+            <th>Nama Ruang</th>
+            <th>Lantai</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in data %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ item['kode'] }}</td>
+            <td>{{ item['nama'] }}</td>
+            <td>{{ item['lantai'] }}</td>
+            <td>
+              <a href="" data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
+              <a href="/data-ruang/delete/{{ item['id'] }}" onclick="return confirm('apakah anda ingin menghapusnya?')">Hapus</a>
+            </td>
+          </tr>
+        </tbody>
+
+        <div class="modal fade" id="modal-edit{{ item['id'] }}" tabindex="-1" aria-labelledby="dataLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="dataLabel">Edit ruang</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="{{ url_for('views.data_ruang') }}" method="POST" enctype="multipart/form-data">
+
+                  <div class="form-group">
+                    <label>Kode Ruang</label>
+                    <input type="hidden" name="id" value="{{ item['id'] }}">
+                    <input type="text" class="form-control" name="kode" placeholder="apa kodenya?"
+                      value="{{ item['kode'] }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Nama</label>
+                    <input type="text" class="form-control" name="nama" placeholder="namanya siapa?"
+                      value="{{ item['nama'] }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Lantai</label>
+                    <input type="text" class="form-control" name="lantai" placeholder="lantai berapa?"
+                      value="{{ item['lantai'] }}">
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
