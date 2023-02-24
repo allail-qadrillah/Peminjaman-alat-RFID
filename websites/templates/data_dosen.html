@@ -41,7 +41,7 @@
             <td>{{ item['kode_dosen'] }}</td>
             <td>{{ item['nama_dosen'] }}</td>
             <td>
-              <a href="" data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
+              <a data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
               <a href="/data-dosen/delete/{{ item['id'] }}" onclick="return confirm('yakin dah dibalein?')">Hapus</a>
             </td>
           </tr>

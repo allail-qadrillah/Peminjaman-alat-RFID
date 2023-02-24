@@ -97,11 +97,22 @@ def input_fakultas():
 
         return redirect(url_for('views.input_fakultas'))
     return render_template('input_fakultas.html', active='fakultas')
-
-
 @views.route('/data-fakultas', methods=['POST', 'GET'])
 def data_fakultas():
-    return render_template('data_fakultas.html')
+    if request.method == 'POST':
+        id = request.form['id']
+        kode = request.form['kode']
+        nama = request.form['nama']
+        user.update_document('fakultas', id, {
+            'kode': kode,
+            'nama': nama
+        })
+    return render_template('data_fakultas.html', active='fakultas', data=user.get_collection('fakultas'))
+@views.route('/data-fakultas/delete/<id>', methods=['POST', 'GET'])
+def delete_data_fakultas(id):
+    user.delete_document('fakultas', id)
+    return redirect(url_for('views.data_fakultas'))
+
 
 
 @views.route('/input-jurusan', methods=['POST', 'GET'])
@@ -115,16 +126,29 @@ def input_jurusan():
             'id': random_string,
             'kode': kode,
             'nama': nama,
-            'nama': fakultas,
+            'nama_fakultas': fakultas,
         })
 
         return redirect(url_for('views.input_jurusan'))
     return render_template('input_jurusan.html', active='jurusan', data_fakultas = user.get_collection('fakultas'))
-
-
 @views.route('/data-jurusan', methods=['POST', 'GET'])
 def data_jurusan():
-    return render_template('data_jurusan.html')
+    if request.method == 'POST':
+        id = request.form['id']
+        kode = request.form['kode']
+        nama = request.form['nama']
+        fakultas = request.form['fakultas']
+        user.update_document('jurusan', id, {
+            'kode': kode,
+            'nama': nama,
+            'fakultas': fakultas
+        })
+    return render_template('data_jurusan.html', active='jurusan', data=user.get_collection('jurusan'))
+@views.route('/data-jurusan/delete/<id>', methods=['POST', 'GET'])
+def delete_data_jurusan(id):
+    user.delete_document('jurusan', id)
+    return redirect(url_for('views.data_jurusan'))
+
 
 
 @views.route('/input-mahasiswa', methods=['POST', 'GET'])
@@ -149,8 +173,25 @@ def input_mahasiswa():
 
 @views.route('/data-mahasiswa', methods=['POST', 'GET'])
 def data_mahasiswa():
-    return render_template('data_mahasiswa.html')
-
+    if request.method == 'POST':
+        id = request.form['id']
+        id_kartu = request.form['id_kartu']
+        nim = request.form['nim']
+        nama = request.form['nama']
+        jurusan = request.form['jurusan']
+        user.update_document('mahasiswa', id, {
+            'id_kartu': id_kartu,
+            'nama': nama,
+            'nim': nim,
+            'nama_jurusan': jurusan
+        })
+    return render_template('data_mahasiswa.html', active='mahasiswa', 
+                            data=user.get_collection('mahasiswa'), 
+                            data_jurusan=user.get_collection('jurusan'))
+@views.route('/data-mahasiswa/delete/<id>', methods=['POST', 'GET'])
+def delete_data_mahasiswa(id):
+    user.delete_document('mahasiswa', id)
+    return redirect(url_for('views.data_mahasiswa'))
 
 @views.route('/input-matakuliah', methods=['POST', 'GET'])
 def input_matakuliah():

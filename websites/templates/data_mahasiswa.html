@@ -1,0 +1,109 @@
+{% extends 'templates/sidebar.html' %}
+
+{% block link %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper ">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Data Mahasiswa</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Mahasiswa</a></li>
+            <li class="breadcrumb-item active">Data Mahasiswa</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid table-responsive ">
+    <div class="row bg-light mt-12 rounded-6">
+
+      <table class="table table-hover ">
+        <thead class="thead-dark">
+          <tr>
+            <th>No</th>
+            <th>ID Kartu Mahasiswa</th>
+            <th>NIM Mahasiswa</th>
+            <th>Nama Mahasiswa</th>
+            <th>Jurusan</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in data %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ item['id_kartu'] }}</td>
+            <td>{{ item['nama'] }}</td>
+            <td>{{ item['nim'] }}</td>
+            <td>{{ item['nama_jurusan'] }}</td>
+            <td>
+              <a href="" data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
+              <a href="/data-mahasiswa/delete/{{ item['id'] }}"
+                onclick="return confirm('apakah anda ingin menghapusnya?')">Hapus</a>
+            </td>
+          </tr>
+        </tbody>
+
+        <div class="modal fade" id="modal-edit{{ item['id'] }}" tabindex="-1" aria-labelledby="dataLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="dataLabel">Edit Mahasiswa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="{{ url_for('views.data_mahasiswa') }}" method="POST" enctype="multipart/form-data">
+
+                  <div class="form-group">
+                    <label>ID Kartu Mahasiswa</label>
+                    <input type="hidden" name="id" value="{{ item['id'] }}">
+                    <input type="number" class="form-control" name="id_kartu" placeholder="apa id kartunya?"
+                      value="{{ item['id_kartu'] }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label>NIM Mahasiswa</label>
+                    <input type="number" class="form-control" name="nim" placeholder="nimnya berapa?"
+                      value="{{ item['nim'] }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Nama Mahasiswa</label>
+                    <input type="text" class="form-control" name="nama" placeholder="namanya siapa?"
+                      value="{{ item['nama'] }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleSelectRounded0">Nama Jurusan</label>
+                    <select name="jurusan" class="custom-select rounded-0" id="exampleSelectRounded0">
+                      {% for jurusan in data_jurusan %}
+                      <option>{{ jurusan['nama'] }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
