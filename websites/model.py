@@ -37,8 +37,8 @@ class User(util):
     return firestore.collection(collection).document(document).set(data_document)
   
   def get_collection(self, collection):
-    data_dosen = firestore.collection(collection).get()
-    return [each.to_dict() for each in data_dosen]
+    data_collection = firestore.collection(collection).get()
+    return [each.to_dict() for each in data_collection]
   
   def delete_document(self, collection, id):
     data_document = firestore.collection(collection).where('id', '==', id).get()
@@ -46,7 +46,11 @@ class User(util):
   
   def update_document(self, collection, document, data_update): 
     return firestore.collection(collection).document(document).update(data_update)
-
-
-# x = User()
-# x.update_document('dosen', 'rerw', {'nama': 'qadrillaah'})
+  
+  def change_status_proyektor(self, nama_proyektor):
+    data_proyektor = self.get_collection('proyektor')
+    for proyektor in data_proyektor:
+      if proyektor['nama'] == nama_proyektor:
+        self.update_document('proyektor', proyektor['id'], {'dipinjam': not proyektor['dipinjam'] })
+        
+# user = User()
