@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from .model import User
 views = Blueprint('views', __name__)
 
@@ -9,6 +9,18 @@ user = User()
 def dashboard():
     return render_template('dashboard.html')
 
+
+@views.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        if username == "admin" and password == "admin":
+            return redirect(url_for('views.dashboard'))
+        else: 
+            flash('Username atau Password salah')
+    return render_template('login.html')
 
 @views.route('/input-dosen', methods=['POST', 'GET'])
 def input_dosen():
