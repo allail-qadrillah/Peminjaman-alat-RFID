@@ -1,0 +1,74 @@
+{% extends 'templates/sidebar.html' %}
+
+{% block title %} <title>Input Pengembalian</title> {% endblock %}
+
+
+{% block body %}
+<div class="content-wrapper ">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Input Pengembalian</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Pengembalian</a></li>
+            <li class="breadcrumb-item active">Input Pengembalian</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form action="{{ url_for('views.input_pengembalian') }}" , method="POST">
+    <div class="card-body">
+
+      <div class="form-group">
+        <label>Tanggal Pinjam</label>
+        <input type="datetime-local" name="waktu" class="form-control" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">No Peminjaman</label>
+        <input type="number" name="nomor" class="form-control" value="" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1">Nama Mahasiswa</label>
+        <input type="text" name="nama" class="form-control" value="" id="exampleInputEmail1"readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleSelectRounded0">Nama Proyektor</label>
+        <input type="number" name="proyektor" class="form-control" value="" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleSelectRounded0">Nama Matakuliah</label>
+        <input type="number" name="matakuliah" class="form-control" value="" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleSelectRounded0">Nama Ruang</label>
+        <input type="number" name="ruang" class="form-control" value="" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleSelectRounded0">Nama Dosen</label>
+        <input type="number" name="dosen" class="form-control" value="" readonly>
+
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Simpan</button> 
+      <a href="{{ url_for('views.data_pengembalian') }}" class="btn btn-secondary">Lihat Data</a>
+    </div>
+    
+  </form>
+</div>
+
+</div>
+{% endblock %}

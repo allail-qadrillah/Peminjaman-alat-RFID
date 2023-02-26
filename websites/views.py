@@ -37,8 +37,8 @@ def data_dosen():
             'nama': nama
         })
     return render_template('data_dosen.html',
-                            active='dosen',
-                            data=user.get_collection('dosen'))
+                           active='dosen',
+                           data=user.get_collection('dosen'))
 
 
 @views.route('/data-dosen/delete/<id>', methods=['POST', 'GET'])
@@ -63,6 +63,8 @@ def input_ruang():
 
         return redirect(url_for('views.input_ruang'))
     return render_template('input_ruang.html', active='ruang')
+
+
 @views.route('/data-ruang', methods=['POST', 'GET'])
 def data_ruang():
     if request.method == 'POST':
@@ -75,12 +77,13 @@ def data_ruang():
             'nama': nama,
             'lantai': lantai
         })
-    return render_template('data_ruang.html',active='ruang',data=user.get_collection('ruang'))
+    return render_template('data_ruang.html', active='ruang', data=user.get_collection('ruang'))
+
+
 @views.route('/data-ruang/delete/<id>', methods=['POST', 'GET'])
 def delete_data_ruang(id):
     user.delete_document('ruang', id)
     return redirect(url_for('views.data_ruang'))
-
 
 
 @views.route('/input-fakultas', methods=['POST', 'GET'])
@@ -97,6 +100,8 @@ def input_fakultas():
 
         return redirect(url_for('views.input_fakultas'))
     return render_template('input_fakultas.html', active='fakultas')
+
+
 @views.route('/data-fakultas', methods=['POST', 'GET'])
 def data_fakultas():
     if request.method == 'POST':
@@ -108,11 +113,12 @@ def data_fakultas():
             'nama': nama
         })
     return render_template('data_fakultas.html', active='fakultas', data=user.get_collection('fakultas'))
+
+
 @views.route('/data-fakultas/delete/<id>', methods=['POST', 'GET'])
 def delete_data_fakultas(id):
     user.delete_document('fakultas', id)
     return redirect(url_for('views.data_fakultas'))
-
 
 
 @views.route('/input-jurusan', methods=['POST', 'GET'])
@@ -130,7 +136,9 @@ def input_jurusan():
         })
 
         return redirect(url_for('views.input_jurusan'))
-    return render_template('input_jurusan.html', active='jurusan', data_fakultas = user.get_collection('fakultas'))
+    return render_template('input_jurusan.html', active='jurusan', data_fakultas=user.get_collection('fakultas'))
+
+
 @views.route('/data-jurusan', methods=['POST', 'GET'])
 def data_jurusan():
     if request.method == 'POST':
@@ -144,11 +152,12 @@ def data_jurusan():
             'fakultas': fakultas
         })
     return render_template('data_jurusan.html', active='jurusan', data=user.get_collection('jurusan'))
+
+
 @views.route('/data-jurusan/delete/<id>', methods=['POST', 'GET'])
 def delete_data_jurusan(id):
     user.delete_document('jurusan', id)
     return redirect(url_for('views.data_jurusan'))
-
 
 
 @views.route('/input-mahasiswa', methods=['POST', 'GET'])
@@ -185,9 +194,11 @@ def data_mahasiswa():
             'nim': nim,
             'nama_jurusan': jurusan
         })
-    return render_template('data_mahasiswa.html', active='mahasiswa', 
-                            data=user.get_collection('mahasiswa'), 
-                            data_jurusan=user.get_collection('jurusan'))
+    return render_template('data_mahasiswa.html', active='mahasiswa',
+                           data=user.get_collection('mahasiswa'),
+                           data_jurusan=user.get_collection('jurusan'))
+
+
 @views.route('/data-mahasiswa/delete/<id>', methods=['POST', 'GET'])
 def delete_data_mahasiswa(id):
     user.delete_document('mahasiswa', id)
@@ -210,6 +221,8 @@ def input_matakuliah():
 
         return redirect(url_for('views.input_matakuliah'))
     return render_template('input_matakuliah.html', active='matakuliah')
+
+
 @views.route('/data-matakuliah', methods=['POST', 'GET'])
 def data_matakuliah():
     if request.method == 'POST':
@@ -223,10 +236,13 @@ def data_matakuliah():
             'sks': sks
         })
     return render_template('data_matakuliah.html', active='matakuliah', data=user.get_collection('matakuliah'),)
+
+
 @views.route('/data-matakuliah/delete/<id>', methods=['POST', 'GET'])
 def delete_data_matakuliah(id):
     user.delete_document('matakuliah', id)
     return redirect(url_for('views.data_matakuliah'))
+
 
 @views.route('/input-proyektor', methods=['POST', 'GET'])
 def input_proyektor():
@@ -248,6 +264,7 @@ def input_proyektor():
         return redirect(url_for('views.input_proyektor'))
     return render_template('input_proyektor.html', active='proyektor')
 
+
 @views.route('/data-proyektor', methods=['POST', 'GET'])
 def data_proyektor():
     if request.method == 'POST':
@@ -263,13 +280,95 @@ def data_proyektor():
             'nomor': nomor
         })
     return render_template('data_proyektor.html', active='proyektor', data=user.get_collection('proyektor'))
+
+
 @views.route('/data-proyektor/delete/<id>', methods=['POST', 'GET'])
 def delete_data_proyektor(id):
     user.delete_document('proyektor', id)
     return redirect(url_for('views.data_proyektor'))
 
+
 @views.route('/input-peminjaman', methods=['POST', 'GET'])
 def input_peminjaman():
+    if request.method == 'POST':
+        random_string = user.random_string()
+        waktu = request.form['waktu'].replace('T', '/')
+        nama = request.form['nama']
+        nomor = request.form['nomor']
+        proyektor = request.form['proyektor']
+        matakuliah = request.form['matakuliah']
+        matakuliah = request.form['matakuliah']
+        ruang = request.form['ruang']
+        dosen = request.form['dosen']
+
+        user.add_document('peminjaman', random_string, {
+            'id': random_string,
+            'waktu': waktu,
+            'nama': nama,
+            'nomor_peminjaman': nomor,
+            'proyektor': proyektor,
+            'matakuliah': matakuliah,
+            'matakuliah': matakuliah,
+            'ruang': ruang,
+            'dosen': dosen,
+            'status': True
+        })
+        user.change_status_proyektor(nama_proyektor=proyektor)
+
+        return redirect(url_for('views.input_peminjaman'))
+
+    proyektor_tersedia = [proyektor for proyektor in user.get_collection(
+        'proyektor') if proyektor['dipinjam'] == False]
+    return render_template('input_peminjaman.html', active='peminjaman',
+                            jumlah_peminjam=len(user.get_collection('peminjaman')),
+                            data_proyektor=proyektor_tersedia,
+                            data_matakuliah=user.get_collection('matakuliah'),
+                            dosen=user.get_collection('matakuliah'),
+                            data_ruang=user.get_collection('ruang'),
+                            data_dosen=user.get_collection('dosen')
+                            )
+@views.route('/data-peminjaman', methods=['POST', 'GET'])
+def data_peminjaman():
+    if request.method == 'POST':
+        id = request.form['id']
+        waktu = request.form['waktu'].replace('T', '/')
+        nama = request.form['nama']
+        nomor = request.form['nomor']
+        proyektor = request.form['proyektor']
+        matakuliah = request.form['matakuliah']
+        matakuliah = request.form['matakuliah']
+        ruang = request.form['ruang']
+        dosen = request.form['dosen']
+        user.update_document('peminjaman', id, {
+            'waktu': waktu,
+            'nama': nama,
+            'nomor': nomor,
+            'proyektor': proyektor,
+            'matakuliah': matakuliah,
+            'matakuliah': matakuliah,
+            'ruang': ruang,
+            'dosen': dosen,
+        })
+
+    proyektor_tersedia = [proyektor for proyektor in user.get_collection(
+            'proyektor') if proyektor['dipinjam'] == False]
+    return render_template('data_peminjaman.html', active='peminjaman',
+                            data=user.get_collection('peminjaman'),
+                            jumlah_peminjam=len(user.get_collection('peminjaman')),
+                            data_proyektor=proyektor_tersedia,
+                            data_matakuliah=user.get_collection('matakuliah'),
+                            dosen=user.get_collection('matakuliah'),
+                            data_ruang=user.get_collection('ruang'),
+                            data_dosen=user.get_collection('dosen')
+                            )
+@views.route('/data-peminjaman/delete/<id>', methods=['POST', 'GET'])
+def delete_data_peminjaman(id):
+    user.delete_document('peminjaman', id)
+    return redirect(url_for('views.data_peminjaman'))
+
+
+@views.route('/input-pengembalian', methods=['POST', 'GET'])
+def input_pengembalian():
     if request.method == 'POST':
         random_string = user.random_string()
         waktu = request.form['waktu']
@@ -281,7 +380,7 @@ def input_peminjaman():
         ruang = request.form['ruang']
         dosen = request.form['dosen']
 
-        user.add_document('peminjaman', random_string, {
+        user.add_document('pengembalian', random_string, {
             'id': random_string,
             'waktu': waktu,
             'nama': nama,
@@ -295,18 +394,49 @@ def input_peminjaman():
         })
         user.change_status_proyektor(nama_proyektor=proyektor)
 
-        return redirect(url_for('views.input_peminjaman'))
-    
-    proyektor_tersedia = [proyektor for proyektor in user.get_collection('proyektor') if proyektor['dipinjam'] == False]
-    return render_template('input_peminjaman.html', active='peminjaman', 
-                            jumlah_peminjam= len(user.get_collection('peminjaman')),
-                            data_proyektor= proyektor_tersedia,
-                            data_matakuliah= user.get_collection('matakuliah'),
-                            dosen= user.get_collection('matakuliah'),
-                            data_ruang= user.get_collection('ruang'),
-                            data_dosen= user.get_collection('dosen')
-                            )
+        return redirect(url_for('views.input_pengembalian'))
 
-@views.route('/data-peminjaman', methods=['POST', 'GET'])
-def data_peminjaman():
-    return render_template('data_peminjaman.html')
+    
+    return render_template('input_pengembalian.html', active='pengembalian')
+
+@views.route('/data-pengembalian', methods=['POST', 'GET'])
+def data_pengembalian():
+    if request.method == 'POST':
+        id = request.form['id']
+        waktu = request.form['waktu'].replace('T', '/')
+        nama = request.form['nama']
+        nomor = request.form['nomor']
+        proyektor = request.form['proyektor']
+        matakuliah = request.form['matakuliah']
+        matakuliah = request.form['matakuliah']
+        ruang = request.form['ruang']
+        dosen = request.form['dosen']
+        user.update_document('pengembalian', id, {
+            'waktu': waktu,
+            'nama': nama,
+            'nomor': nomor,
+            'proyektor': proyektor,
+            'matakuliah': matakuliah,
+            'matakuliah': matakuliah,
+            'ruang': ruang,
+            'dosen': dosen,
+        })
+
+    proyektor_tersedia = [proyektor for proyektor in user.get_collection(
+        'proyektor') if proyektor['dipinjam'] == False]
+    return render_template('data_pengembalian.html', active='pengembalian',
+                           data=user.get_collection('pengembalian'),
+                           jumlah_peminjam=len(
+                               user.get_collection('pengembalian')),
+                           data_proyektor=proyektor_tersedia,
+                           data_matakuliah=user.get_collection('matakuliah'),
+                           dosen=user.get_collection('matakuliah'),
+                           data_ruang=user.get_collection('ruang'),
+                           data_dosen=user.get_collection('dosen')
+                           )
+
+
+@views.route('/data-pengembalian/delete/<id>', methods=['POST', 'GET'])
+def delete_data_pengembalian(id):
+    user.delete_document('pengembalian', id)
+    return redirect(url_for('views.data_pengembalian'))
