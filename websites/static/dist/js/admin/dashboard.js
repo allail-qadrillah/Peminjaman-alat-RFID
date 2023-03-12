@@ -50,7 +50,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebas
 function noTerdaftar() {
   document.getElementById('main').innerHTML = 'Maaf Kartu Tidak Terdaftar!!!'
   document.getElementById('main').className = 'mt-5'
-  document.getElementById('second').innerHTML = 'Silahkan Daftarkan Kartu'
+  document.getElementById('second').innerHTML = 'Silahkan Daftarkan Kartu Terlebih Dahulu'
   document.getElementById('image').remove() = ''
 }
 
