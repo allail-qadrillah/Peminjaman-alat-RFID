@@ -1,32 +1,63 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-const firebaseApp = initializeApp({
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: "",
-  measurementId: ""
-});
+// const firebaseApp = initializeApp({
+//   apiKey: "",
+//   authDomain: "",
+//   databaseURL: "",
+//   projectId: "",
+//   storageBucket: "",
+//   messagingSenderId: "",
+//   appId: "",
+//   measurementId: ""
+// });
 
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
-const db = getDatabase()
-// update data
-onValue(ref(db, '/'), (snapshot) => {
-  const data = snapshot.val();
+// import { getDatabase, ref, onValue, get, update } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
+// const db = getDatabase()
+// // update data
+// onValue(ref(db, '/'), (snapshot) => {
+//   const data = snapshot.val();
 
-  const status = data['raspberry_server'];
+//   const status = data['raspberry_server'];
+//   var lampuOtomatis = data['lampu_otomatis'] ? document.getElementById('lampu-otomatis').innerHTML = 'Matikan Lampu Otomatis ⚙️' : document.getElementById('lampu-otomatis').innerHTML = 'Hidupkan Lampu Otomatis ⚙️'
+//   var lampuOtomatis = data['lampu_otomatis'] ? document.getElementById('lampu-otomatis').className = 'btn btn-danger mb-4' : document.getElementById('lampu-otomatis').className = 'btn btn-success mb-4'
+//   var lampu = data['lampu'] ? document.getElementById('lampu').innerHTML = 'Hidup 💡' : document.getElementById('lampu').innerHTML = 'Mati 💡'
+//   var lampu = data['lampu'] ? document.getElementById('lampu').className = 'btn btn-success' : document.getElementById('lampu').className = 'btn btn-danger'
+  
 
+//   if (status == true) {
+//     document.getElementById('pengunjung-lab').innerHTML = data['pengunjung_lab'];
+//   } else {
+//     document.getElementById('pengunjung-lab').innerHTML = '0';
+//   }
+// });
 
-  if (status == true) {
-    document.getElementById('raspberry-status').innerHTML = "Aktif";
-    document.getElementById('pengunjung-lab').innerHTML = data['pengunjung_lab'];
-    document.getElementById('class-raspberry-server').className = 'small-box bg-success';
-  } else {
-    document.getElementById('raspberry-status').innerHTML = "Non Aktif";
-    document.getElementById('pengunjung-lab').innerHTML = '0';
-    document.getElementById('class-raspberry-server').className = 'small-box bg-danger';
-  }
-});
+// function updateBtnStatus(namaBtn) {
+//   get(ref(db, '/')).then((snapshot) => {
+//     const status = snapshot.val()[namaBtn]
 
+//     if (status) {
+//       update(ref(db, '/'), {
+//         [namaBtn]: false
+//       })
+//     } else {
+//       update(ref(db, '/'), {
+//         [namaBtn]: true
+//       })
+//     }
+
+//   })
+// }
+
+function noTerdaftar() {
+  document.getElementById('main').innerHTML = 'Maaf Kartu Tidak Terdaftar!!!'
+  document.getElementById('main').className = 'mt-5'
+  document.getElementById('second').innerHTML = 'Silahkan Daftarkan Kartu'
+  document.getElementById('image').remove() = ''
+}
+
+function loading() {
+  document.getElementById('loading').innerHTML = 'loading...'
+}
+
+window.scanKartu = () => {
+  noTerdaftar()
+}

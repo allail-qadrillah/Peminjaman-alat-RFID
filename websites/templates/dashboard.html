@@ -2,57 +2,154 @@
 
 {% block body %}
 <div class="content-wrapper ">
+  <div class="content-header">
 
+    <div class="container">
+      <div class="row ml-5">
 
-  <div class="container-fluid">
-    <div class="row">
-
-      <div class="col-4  ">
-        <div class="card " style="width: 10rem; height: 10rem">
-          <div class="card-body">
+        <div class="col-4">
+          <div class="card" style="width: 18rem;">
             <div class="container">
-              <div class="justify-content-center">
-                <div class="col text-center">
-                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" alt="gambar" class="img-fluid">
-                  <p class="card-text">10</p>
-                  <p class="card-text">Jurusan</p>
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                    class="img-fluid mt-4">
+                  <h4>{{ jumlah_data['jurusan'] }}</h4>
+                  <h5>Jurusan</h5>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-4  ">
-        <div class="card">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-md-6 text-center">
-                <img src="https://via.placeholder.com/150" alt="gambar" class="img-fluid mt-4">
-                <h4 class="mt-2">10</h4>
-                <h3>Jurusan</h3>
+        <div class="col-4  ">
+          <div class="card" style="width: 18rem;">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                    class="img-fluid mt-4">
+                  <h4>{{ jumlah_data['mahasiswa'] }}</h4>
+                  <h5>Mahasiswa</h5>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="col-4  ">
-        <div class="card">
-          <div class="container">
-            <div class="row justify-content-center">
-              <div class="col-md-6 text-center">
-                <img src="https://via.placeholder.com/150" alt="gambar" class="img-fluid mt-4">
-                <h4 class="mt-2">10</h4>
-                <h3>Jurusan</h3>
+        <div class="col-4  ">
+          <div class="card" style="width: 18rem;">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                    class="img-fluid mt-4">
+                  <h4>{{ jumlah_data['ruang'] }}</h4>
+                  <h5>Ruang</h5>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <div class="col-4  ">
+          <div class="card" style="width: 18rem;">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                    class="img-fluid mt-4">
+                  <h4>{{ jumlah_data['fakultas'] }}</h4>
+                  <h5>Fakultas</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4  ">
+          <div class="card" style="width: 18rem;height:12rem;">
+            <div class="container">
+              <div class="row ">
+                <div class="col-12 text-center">
+                  <h1 id="main" class="mt-2">CEK SCAN</h1>
+                  <h5 id="second" class="">Silahkan Tempelkan Kartu</h5>
+                  <img id="image" src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" alt="gambar"
+                    class="img-fluid " width="110">
+                  <h6 id="loading"></h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4  ">
+          <div class="card" style="width: 18rem;">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                    class="img-fluid mt-4">
+                  <h4>{{ jumlah_data['proyektor'] }}</h4>
+                  <h5>Proyektor</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4  ">
+          <div class="card" style="width: 18rem;">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                    class="img-fluid mt-4">
+                  <h4>{{ jumlah_data['peminjaman'] }}</h4>
+                  <h5>Peminjaman</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4  ">
+          <a class="btn" onclick="scanKartu()">
+            <div class="card" style="width: 18rem;height:12rem;">
+              <div class="container">
+                <div class="row ">
+                  <div class="col-12 text-center">
+                    <h1 class="mt-5">👇</h1>
+                    <h1 class="">SCAN KARTU</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-4  ">
+          <div class="card" style="width: 18rem;">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                    class="img-fluid mt-4">
+                  <h4>{{ jumlah_data['pengembalian'] }}</h4>
+                  <h5>Pengembalian</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>
-
   </div>
+</div>
 
-  {% endblock %}
+{% block script %}
+<script type="module" src="{{url_for('static', filename = 'dist/js/admin/dashboard.js')}}"></script>
+{% endblock %}
+{% endblock %}

@@ -7,7 +7,17 @@ user = User()
 
 @views.route('/', methods=['POST', 'GET'])
 def dashboard():
-    return render_template('dashboard.html')
+    
+
+    return render_template('dashboard.html', jumlah_data={
+        'jurusan': len(user.get_collection('jurusan')),
+        'mahasiswa': len(user.get_collection('mahasiswa')),
+        'ruang': len(user.get_collection('ruang')),
+        'fakultas': len(user.get_collection('fakultas')),
+        'proyektor': len(user.get_collection('proyektor')),
+        'peminjaman': len(user.get_collection('peminjaman')),
+        'pengembalian': len(user.get_collection('pengembalian')),
+    })
 
 
 @views.route('/login', methods=['POST', 'GET'])
