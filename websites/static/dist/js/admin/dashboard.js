@@ -55,7 +55,7 @@ function noTerdaftar() {
 }
 
 function loading() {
-  document.getElementById('loading').innerHTML = 'loading...'
+  document.getElementById('loading').innerHTML = 'mengecek kartu'
 }
 
 window.scanKartu = () => {
