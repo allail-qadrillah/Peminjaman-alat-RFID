@@ -7,8 +7,6 @@ user = User()
 
 @views.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
-    
-
     return render_template('dashboard.html', jumlah_data={
         'jurusan': len(user.get_collection('jurusan')),
         'mahasiswa': len(user.get_collection('mahasiswa')),
@@ -25,12 +23,13 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
+
         if username == "admin" and password == "admin":
             return redirect(url_for('views.dashboard'))
-        else: 
+        else:
             flash('Username atau Password salah')
     return render_template('login.html')
+
 
 @views.route('/input-dosen', methods=['POST', 'GET'])
 def input_dosen():
@@ -342,13 +341,18 @@ def input_peminjaman():
     proyektor_tersedia = [proyektor for proyektor in user.get_collection(
         'proyektor') if proyektor['dipinjam'] == False]
     return render_template('input_peminjaman.html', active='peminjaman',
-                            jumlah_peminjam=len(user.get_collection('peminjaman')),
-                            data_proyektor=proyektor_tersedia,
-                            data_matakuliah=user.get_collection('matakuliah'),
-                            dosen=user.get_collection('matakuliah'),
-                            data_ruang=user.get_collection('ruang'),
-                            data_dosen=user.get_collection('dosen')
-                            )
+                           jumlah_peminjam=len(
+                               user.get_collection('peminjaman')),
+                           data_proyektor=proyektor_tersedia,
+                           data_matakuliah=user.get_collection('matakuliah'),
+                           dosen=user.get_collection('matakuliah'),
+                           data_ruang=user.get_collection('ruang'),
+                           data_dosen=user.get_collection('dosen'),
+                           mahasiswa=user.find_mahasiswa() if user.find_mahasiswa() is not None else {
+                               'mahasiswa': ''}
+                           )
+
+
 @views.route('/data-peminjaman', methods=['POST', 'GET'])
 def data_peminjaman():
     if request.method == 'POST':
@@ -373,16 +377,19 @@ def data_peminjaman():
         })
 
     proyektor_tersedia = [proyektor for proyektor in user.get_collection(
-            'proyektor') if proyektor['dipinjam'] == False]
+        'proyektor') if proyektor['dipinjam'] == False]
     return render_template('data_peminjaman.html', active='peminjaman',
-                            data=user.get_collection('peminjaman'),
-                            jumlah_peminjam=len(user.get_collection('peminjaman')),
-                            data_proyektor=proyektor_tersedia,
-                            data_matakuliah=user.get_collection('matakuliah'),
-                            dosen=user.get_collection('matakuliah'),
-                            data_ruang=user.get_collection('ruang'),
-                            data_dosen=user.get_collection('dosen')
-                            )
+                           data=user.get_collection('peminjaman'),
+                           jumlah_peminjam=len(
+                               user.get_collection('peminjaman')),
+                           data_proyektor=proyektor_tersedia,
+                           data_matakuliah=user.get_collection('matakuliah'),
+                           dosen=user.get_collection('matakuliah'),
+                           data_ruang=user.get_collection('ruang'),
+                           data_dosen=user.get_collection('dosen')
+                           )
+
+
 @views.route('/data-peminjaman/delete/<id>', methods=['POST', 'GET'])
 def delete_data_peminjaman(id):
     user.delete_document('peminjaman', id)
@@ -418,8 +425,8 @@ def input_pengembalian():
 
         return redirect(url_for('views.input_pengembalian'))
 
-    
     return render_template('input_pengembalian.html', active='pengembalian')
+
 
 @views.route('/data-pengembalian', methods=['POST', 'GET'])
 def data_pengembalian():

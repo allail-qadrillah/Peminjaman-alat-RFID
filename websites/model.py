@@ -1,5 +1,5 @@
 import firebase_admin
-from firebase_admin import credentials, firestore, storage
+from firebase_admin import credentials, firestore, db
 import random
 import string
 credential = {
@@ -20,7 +20,6 @@ firebase_admin.initialize_app(cred, {
 })
 
 firestore = firestore.client()
-
 
 class util():
   def random_string(self, string_length=5):
@@ -51,5 +50,15 @@ class User(util):
     for proyektor in data_proyektor:
       if proyektor['nama'] == nama_proyektor:
         self.update_document('proyektor', proyektor['id'], {'dipinjam': not proyektor['dipinjam'] })
-        
-# user = User()
+  
+  def get_id_rtdb(self):
+    return db.reference('id').get()
+  
+  def find_mahasiswa(self):
+    try:
+      return [doc.to_dict() for doc in firestore.collection('mahasiswa').where(
+        'id_kartu', '==', self.get_id_rtdb()).get()][0]
+    except:
+      return None
+user = User()
+print(user.find_mahasiswa())
