@@ -5,7 +5,7 @@ views = Blueprint('views', __name__)
 user = User()
 
 
-@views.route('/', methods=['POST', 'GET'])
+@views.route('/dashboard', methods=['POST', 'GET'])
 def dashboard():
     
 
@@ -20,7 +20,7 @@ def dashboard():
     })
 
 
-@views.route('/login', methods=['POST', 'GET'])
+@views.route('/', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         username = request.form['username']

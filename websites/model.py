@@ -16,7 +16,7 @@ credential = {
 }
 cred = credentials.Certificate(credential)
 firebase_admin.initialize_app(cred, {
-    'databaseURL': ' '
+    'databaseURL': 'https://web-peminjaman-alat-using-rfid-default-rtdb.asia-southeast1.firebasedatabase.app'
 })
 
 firestore = firestore.client()

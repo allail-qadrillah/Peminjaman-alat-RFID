@@ -1,53 +1,32 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js";
-// const firebaseApp = initializeApp({
-//   apiKey: "",
-//   authDomain: "",
-//   databaseURL: "",
-//   projectId: "",
-//   storageBucket: "",
-//   messagingSenderId: "",
-//   appId: "",
-//   measurementId: ""
-// });
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+initializeApp({
+  apiKey: "AIzaSyAdm9MlbEGvt5w5kNYe3UJjqLeiB7ziRJE",
+  authDomain: "web-peminjaman-alat-using-rfid.firebaseapp.com",
+  projectId: "web-peminjaman-alat-using-rfid",
+  storageBucket: "web-peminjaman-alat-using-rfid.appspot.com",
+  messagingSenderId: "929165816271",
+  appId: "1:929165816271:web:a8c57a77144ce5bc2da2ba",
+  measurementId: "G-HNHG9TMPDH",
+  databaseURL: 'https://web-peminjaman-alat-using-rfid-default-rtdb.asia-southeast1.firebasedatabase.app'
+});
 
-// import { getDatabase, ref, onValue, get, update } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js";
-// const db = getDatabase()
-// // update data
-// onValue(ref(db, '/'), (snapshot) => {
-//   const data = snapshot.val();
+import { getDatabase, set, ref, onValue, get, child } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+import { getFirestore, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.17.2/firebase-firestore.js'
+const db = getFirestore()
+const rtdb = getDatabase()
 
-//   const status = data['raspberry_server'];
-//   var lampuOtomatis = data['lampu_otomatis'] ? document.getElementById('lampu-otomatis').innerHTML = 'Matikan Lampu Otomatis ⚙️' : document.getElementById('lampu-otomatis').innerHTML = 'Hidupkan Lampu Otomatis ⚙️'
-//   var lampuOtomatis = data['lampu_otomatis'] ? document.getElementById('lampu-otomatis').className = 'btn btn-danger mb-4' : document.getElementById('lampu-otomatis').className = 'btn btn-success mb-4'
-//   var lampu = data['lampu'] ? document.getElementById('lampu').innerHTML = 'Hidup 💡' : document.getElementById('lampu').innerHTML = 'Mati 💡'
-//   var lampu = data['lampu'] ? document.getElementById('lampu').className = 'btn btn-success' : document.getElementById('lampu').className = 'btn btn-danger'
-  
+function getCollection(db, colRef) {
+  return getDocs(collection(db, colRef))
+    .then((snapshot) => {
+      let data = []
+      snapshot.docs.forEach(doc => {
+        data.push({ ...doc.data(), id: doc.id })
+      });
+      return data
+    });
+}
 
-//   if (status == true) {
-//     document.getElementById('pengunjung-lab').innerHTML = data['pengunjung_lab'];
-//   } else {
-//     document.getElementById('pengunjung-lab').innerHTML = '0';
-//   }
-// });
-
-// function updateBtnStatus(namaBtn) {
-//   get(ref(db, '/')).then((snapshot) => {
-//     const status = snapshot.val()[namaBtn]
-
-//     if (status) {
-//       update(ref(db, '/'), {
-//         [namaBtn]: false
-//       })
-//     } else {
-//       update(ref(db, '/'), {
-//         [namaBtn]: true
-//       })
-//     }
-
-//   })
-// }
-
-function noTerdaftar() {
+function tidakTerdaftar() {
   document.getElementById('main').innerHTML = 'Maaf Kartu Tidak Terdaftar!!!'
   document.getElementById('main').className = 'mt-5'
   document.getElementById('second').innerHTML = 'Silahkan Daftarkan Kartu Terlebih Dahulu'
@@ -59,5 +38,44 @@ function loading() {
 }
 
 window.scanKartu = () => {
-  noTerdaftar()
+  loading()
+  // update scan == 1
+  set(ref(rtdb, '/scan'), 1)
+
+  // dapatkan value dari id
+  const intervalId = setInterval(() => {
+    get(child(ref(rtdb), 'id'))
+      .then((snapshot) => {
+        const id = snapshot.val();
+        if (id !== 0) {
+          clearInterval(intervalId);
+          set(ref(rtdb, '/scan'), 0)
+          console.log(`Data id berhasil didapatkan: ${id}`);
+          // cek id
+          getCollection(db, 'mahasiswa').then((mahasiswa) => {
+            if (mahasiswa.find(m => m.id_kartu === id)) {
+              console.log('Terdaftar')
+              // tampilkan modal pilihan menu
+              $(document).ready(function () {
+                $("#myModal").modal('show');
+              });
+
+
+            } else {
+              // window.location.assign('/input-mahasiswa')
+              console.log("tidak Terdaftar")
+            }
+          });
+
+
+        }
+
+      })
+      .catch((error) => {
+        console.log(`Terjadi kesalahan saat mendapatkan data id: ${error}`);
+      });
+  }, 1000);
+
+
 }
+
