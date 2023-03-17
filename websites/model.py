@@ -51,14 +51,28 @@ class User(util):
       if proyektor['nama'] == nama_proyektor:
         self.update_document('proyektor', proyektor['id'], {'dipinjam': not proyektor['dipinjam'] })
   
-  def get_id_rtdb(self):
-    return db.reference('id').get()
+  def get_value_rtdb(self, key):
+    return db.reference(key).get()
+  
+  def update_value_rtdb(self, key, value):
+    ref = db.reference('/')
+    ref.update({
+        key : value
+    })
   
   def find_mahasiswa(self):
     try:
       return [doc.to_dict() for doc in firestore.collection('mahasiswa').where(
-        'id_kartu', '==', self.get_id_rtdb()).get()][0]
+        'id_kartu', '==', self.get_value_rtdb('id')).get()][0]
     except:
       return None
-user = User()
-print(user.find_mahasiswa())
+    
+  def find_peminjaman(self):
+    nama_mahasiswa = self.find_mahasiswa()['nama']
+    list_peminjam = [doc.to_dict() for doc in firestore.collection('peminjaman').where(
+        'nama', '==', nama_mahasiswa).get()]
+    
+    return list_peminjam
+
+# user = User()
+# print(user.find_peminjaman())

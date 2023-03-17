@@ -198,7 +198,11 @@ def input_mahasiswa():
         })
 
         return redirect(url_for('views.input_mahasiswa'))
-    return render_template('input_mahasiswa.html', active='mahasiswa', data_jurusan=user.get_collection('jurusan'))
+    
+
+    return render_template('input_mahasiswa.html', active='mahasiswa', 
+                            data_jurusan=user.get_collection('jurusan'), 
+                            id = user.get_value_rtdb('id'))
 
 
 @views.route('/data-mahasiswa', methods=['POST', 'GET'])
@@ -340,6 +344,10 @@ def input_peminjaman():
 
     proyektor_tersedia = [proyektor for proyektor in user.get_collection(
         'proyektor') if proyektor['dipinjam'] == False]
+    
+    mahasiswa = user.find_mahasiswa() if user.find_mahasiswa() is not None else {'mahasiswa': ''}
+    user.update_value_rtdb('id', "0")
+
     return render_template('input_peminjaman.html', active='peminjaman',
                            jumlah_peminjam=len(
                                user.get_collection('peminjaman')),
@@ -348,8 +356,7 @@ def input_peminjaman():
                            dosen=user.get_collection('matakuliah'),
                            data_ruang=user.get_collection('ruang'),
                            data_dosen=user.get_collection('dosen'),
-                           mahasiswa=user.find_mahasiswa() if user.find_mahasiswa() is not None else {
-                               'mahasiswa': ''}
+                           mahasiswa= mahasiswa
                            )
 
 
@@ -425,7 +432,13 @@ def input_pengembalian():
 
         return redirect(url_for('views.input_pengembalian'))
 
-    return render_template('input_pengembalian.html', active='pengembalian')
+    mahasiswa = user.find_mahasiswa()
+    peminjaman = user.find_peminjaman()
+    user.update_value_rtdb('id', "0")
+
+    return render_template('input_pengembalian.html', active='pengembalian',
+                            mahasiswa = mahasiswa,
+                            peminjaman= peminjaman)
 
 
 @views.route('/data-pengembalian', methods=['POST', 'GET'])

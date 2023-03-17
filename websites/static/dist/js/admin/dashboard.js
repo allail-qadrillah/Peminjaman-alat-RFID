@@ -26,18 +26,14 @@ function getCollection(db, colRef) {
     });
 }
 
-function tidakTerdaftar() {
-  document.getElementById('main').innerHTML = 'Maaf Kartu Tidak Terdaftar!!!'
-  document.getElementById('main').className = 'mt-5'
-  document.getElementById('second').innerHTML = 'Silahkan Daftarkan Kartu Terlebih Dahulu'
-  document.getElementById('image').remove() = ''
-}
-
 function loading() {
-  document.getElementById('loading').innerHTML = 'mengecek kartu ...'
+  document.getElementById('image').src = "static/img/icon/LOADING.png";
+  document.getElementById('loading').innerHTML = "<em>mengecek kartu ...</em>";
+
 }
 
 window.scanKartu = () => {
+  document.getElementById('emoji').innerHTML = "🔃";
   loading()
   // update scan == 1
   set(ref(rtdb, '/scan'), 1)
@@ -47,14 +43,13 @@ window.scanKartu = () => {
     get(child(ref(rtdb), 'id'))
       .then((snapshot) => {
         const id = snapshot.val();
-        if (id !== 0) {
+        if (id !== "0") {
           clearInterval(intervalId);
           set(ref(rtdb, '/scan'), 0)
-          console.log(`Data id berhasil didapatkan: ${id}`);
           // cek id
           getCollection(db, 'mahasiswa').then((mahasiswa) => {
             if (mahasiswa.find(m => m.id_kartu === id)) {
-              console.log('Terdaftar')
+
               // tampilkan modal pilihan menu
               $(document).ready(function () {
                 $("#myModal").modal('show');
@@ -62,12 +57,10 @@ window.scanKartu = () => {
 
 
             } else {
-              // window.location.assign('/input-mahasiswa')
-              console.log("tidak Terdaftar")
+              window.location.assign('/input-mahasiswa')
+
             }
           });
-
-
         }
 
       })

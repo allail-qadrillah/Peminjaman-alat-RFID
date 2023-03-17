@@ -25,50 +25,79 @@
     <div class="card-body">
 
       <div class="form-group">
-        <label>Tanggal Pinjam</label>
+        <label>Tanggal Pengembalian</label>
         <input type="datetime-local" name="waktu" class="form-control" readonly>
       </div>
 
       <div class="form-group">
-        <label for="exampleInputEmail1">No Peminjaman</label>
-        <input type="number" name="nomor" class="form-control" value="" readonly>
+        <label>No Peminjaman</label>
+        <select name="nomor" class="custom-select rounded-0" id="exampleSelectRounded0">
+          {% for item in peminjaman %}
+          <option>{{ item['nomor_peminjaman'] }}</option>
+          {% endfor %}
+        </select>
       </div>
 
       <div class="form-group">
         <label for="exampleInputEmail1">Nama Mahasiswa</label>
-        <input type="text" name="nama" class="form-control" value="" id="exampleInputEmail1"readonly>
+        <input type="text" name="nama" class="form-control" value="{{ mahasiswa['nama'] }}" id="exampleInputEmail1"
+          readonly>
       </div>
 
       <div class="form-group">
-        <label for="exampleSelectRounded0">Nama Proyektor</label>
-        <input type="number" name="proyektor" class="form-control" value="" readonly>
+        <label>Nama Proyektor</label>
+        <select name="proyektor" class="custom-select rounded-0" id="exampleSelectRounded0">
+          {% for item in peminjaman %}
+          <option>{{ item['proyektor'] }}</option>
+          {% endfor %}
+        </select>
       </div>
 
       <div class="form-group">
-        <label for="exampleSelectRounded0">Nama Matakuliah</label>
-        <input type="number" name="matakuliah" class="form-control" value="" readonly>
-      </div>
+        <label>Nama Matakuliah</label>
+        <select name="matakuliah" class="custom-select rounded-0" id="exampleSelectRounded0">
+          {% for item in peminjaman %}
+          <option>{{ item['matakuliah'] }}</option>
+          {% endfor %}
+        </select>     </div>
 
       <div class="form-group">
-        <label for="exampleSelectRounded0">Nama Ruang</label>
-        <input type="number" name="ruang" class="form-control" value="" readonly>
-      </div>
+        <label>Nama Ruang</label>
+        <select name="ruang" class="custom-select rounded-0" id="exampleSelectRounded0">
+          {% for item in peminjaman %}
+          <option>{{ item['ruang'] }}</option>
+          {% endfor %}
+        </select>     </div>
 
       <div class="form-group">
-        <label for="exampleSelectRounded0">Nama Dosen</label>
-        <input type="number" name="dosen" class="form-control" value="" readonly>
-
+        <label>Nama Dosen</label>
+        <select name="dosen" class="custom-select rounded-0" id="exampleSelectRounded0">
+          {% for item in peminjaman %}
+          <option>{{ item['dosen'] }}</option>
+          {% endfor %}
+        </select>
       </div>
 
     </div>
 
     <div class="card-footer">
-      <button type="submit" class="btn btn-primary">Simpan</button> 
+      <button type="submit" class="btn btn-primary">Simpan</button>
       <a href="{{ url_for('views.data_pengembalian') }}" class="btn btn-secondary">Lihat Data</a>
     </div>
-    
+
   </form>
 </div>
 
 </div>
+
+{% block script %}
+<script>
+  var input = document.querySelector('input[type="datetime-local"]');
+  var now = new Date();
+  var timezoneOffset = now.getTimezoneOffset() * 60000;
+  var currentDatetime = new Date(Date.now() - timezoneOffset).toISOString().slice(0, 16);
+  input.value = currentDatetime;
+</script>
+{% endblock %}
+
 {% endblock %}

@@ -46,7 +46,7 @@
             <td>{{ item['kondisi'] }}</td>
             <td >
               <a href="" data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
-              <a href="/data-matakuliah/delete/{{ item['id'] }}"
+              <a href="/data-proyektor/delete/{{ item['id'] }}"
                 onclick="return confirm('apakah anda ingin menghapusnya?')">Hapus</a>
               {% if item['dipinjam'] %}
               <a style="color:red">Pinjam</a>

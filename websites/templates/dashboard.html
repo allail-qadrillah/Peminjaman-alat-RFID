@@ -9,10 +9,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title">Anda Telah Terdaftar</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
+            <h4 class="modal-title">Mahasiswa Telah Terdaftar</h4>
           </div>
           <div class="modal-body">
             <p>Silahkan pilih 👇</p>
@@ -31,7 +28,7 @@
       <div class="row ml-5">
 
         <div class="col-4">
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 18rem;height: 13rem">
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
@@ -46,11 +43,11 @@
         </div>
 
         <div class="col-4  ">
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 18rem;height: 13rem">
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
-                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                  <img style="width: 130px;height: 110px" src="{{url_for('static', filename = 'img/icon/MAHASISWA.png')}}" z alt="gambar"
                     class="img-fluid mt-4">
                   <h4>{{ jumlah_data['mahasiswa'] }}</h4>
                   <h5>Mahasiswa</h5>
@@ -61,11 +58,11 @@
         </div>
 
         <div class="col-4  ">
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 18rem;height: 13rem">
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
-                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                  <img style="width: 130px;height: 110px" src="{{url_for('static', filename = 'img/icon/RUANGAN.png')}}" z alt="gambar"
                     class="img-fluid mt-4">
                   <h4>{{ jumlah_data['ruang'] }}</h4>
                   <h5>Ruang</h5>
@@ -80,7 +77,7 @@
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
-                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                  <img src="{{url_for('static', filename = 'img/icon/FAKULTAS.png')}}" z alt="gambar"
                     class="img-fluid mt-4">
                   <h4>{{ jumlah_data['fakultas'] }}</h4>
                   <h5>Fakultas</h5>
@@ -91,14 +88,14 @@
         </div>
 
         <div class="col-4  ">
-          <div class="card" style="width: 18rem;height:12rem;">
+          <div class="card" style="width: 18rem;height:13rem;">
             <div class="container">
               <div class="row ">
                 <div class="col-12 text-center">
                   <h1 id="main" class="mt-2">CEK SCAN</h1>
                   <h5 id="second" class="">Silahkan Tempelkan Kartu</h5>
-                  <img id="image" src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" alt="gambar"
-                    class="img-fluid " width="110">
+                  <img id="image" width="90" src="{{url_for('static', filename = 'img/icon/LOGO_RFID.png')}}" alt="gambar"
+                    class="img-fluid rotating-image" width="110">
                   <h6 id="loading"></h6>
                 </div>
               </div>
@@ -111,7 +108,7 @@
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
-                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                  <img src="{{url_for('static', filename = 'img/icon/PROYEKTOR.png')}}" z alt="gambar"
                     class="img-fluid mt-4">
                   <h4>{{ jumlah_data['proyektor'] }}</h4>
                   <h5>Proyektor</h5>
@@ -126,7 +123,7 @@
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
-                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                  <img src="{{url_for('static', filename = 'img/icon/PEMINJAMAN.png')}}" z alt="gambar"
                     class="img-fluid mt-4">
                   <h4>{{ jumlah_data['peminjaman'] }}</h4>
                   <h5>Peminjaman</h5>
@@ -137,12 +134,12 @@
         </div>
 
         <div class="col-4  ">
-          <a class="btn" onclick="scanKartu()">
-            <div class="card" style="width: 18rem;height:12rem;">
+          <a class="btn" style="width: 18rem;" onclick="scanKartu()">
+            <div class="card" style="width: 16.5rem;height:12rem;">
               <div class="container">
                 <div class="row ">
                   <div class="col-12 text-center">
-                    <h1 class="mt-5">👇</h1>
+                    <h1 class="mt-5" id="emoji">👇</h1>
                     <h1 class="">SCAN KARTU</h1>
                   </div>
                 </div>
@@ -156,7 +153,7 @@
             <div class="container">
               <div class="row justify-content-center">
                 <div class="col-md-6 text-center">
-                  <img src="{{url_for('static', filename = 'img/icon/JURUSAN.png')}}" z alt="gambar"
+                  <img src="{{url_for('static', filename = 'img/icon/PENGEMBALIAN.png')}}" z alt="gambar"
                     class="img-fluid mt-4">
                   <h4>{{ jumlah_data['pengembalian'] }}</h4>
                   <h5>Pengembalian</h5>
@@ -172,6 +169,21 @@
   </div>
 </div>
 
+<style>
+.rotating-image {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+</style>
 
 
 {% block script %}
