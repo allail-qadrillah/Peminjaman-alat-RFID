@@ -245,6 +245,17 @@
     {% block script %}
       
     {% endblock %}
+    <style>
+      .custom-alert {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 80%;
+        padding: 0.4rem 0.6rem;
+        border-radius: 0.5rem;
+      }
+    </style>
     <!-- jQuery -->
     <script src="{{url_for('static', filename = 'plugins/jquery/jquery.min.js')}}"></script>
     <!-- jQuery UI 1.11.4 -->

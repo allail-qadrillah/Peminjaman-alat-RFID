@@ -42,7 +42,7 @@ def input_dosen():
             'kode': kode_dosen,
             'nama': nama
         })
-
+        flash('Data Dosen Berhasil Ditambahkan')
         return redirect(url_for('views.input_dosen'))
     return render_template('input_dosen.html', active='dosen')
 
@@ -81,7 +81,7 @@ def input_ruang():
             'nama': nama,
             'lantai': lantai,
         })
-
+        flash('Data Ruangan Berhasil Ditambahkan')
         return redirect(url_for('views.input_ruang'))
     return render_template('input_ruang.html', active='ruang')
 
@@ -118,7 +118,7 @@ def input_fakultas():
             'kode': kode,
             'nama': nama
         })
-
+        flash('Data Fakultas Berhasil Ditambahkan')
         return redirect(url_for('views.input_fakultas'))
     return render_template('input_fakultas.html', active='fakultas')
 
@@ -155,7 +155,7 @@ def input_jurusan():
             'nama': nama,
             'nama_fakultas': fakultas,
         })
-
+        flash('Data Jurusan Berhasil Ditambahkan')
         return redirect(url_for('views.input_jurusan'))
     return render_template('input_jurusan.html', active='jurusan', data_fakultas=user.get_collection('fakultas'))
 
@@ -196,7 +196,7 @@ def input_mahasiswa():
             'nama': nama,
             'nama_jurusan': jurusan,
         })
-
+        flash('Data Mahasiswa Berhasil Ditambahkan')
         return redirect(url_for('views.input_mahasiswa'))
     
 
@@ -243,6 +243,7 @@ def input_matakuliah():
             'kode': kode,
             'sks': sks
         })
+        flash('Data Matakuliah Berhasil Ditambahkan')
 
         return redirect(url_for('views.input_matakuliah'))
     return render_template('input_matakuliah.html', active='matakuliah')
@@ -285,6 +286,7 @@ def input_proyektor():
             'kondisi': kondisi,
             'dipinjam': False
         })
+        flash('Data Proyektor Berhasil Ditambahkan')
 
         return redirect(url_for('views.input_proyektor'))
     return render_template('input_proyektor.html', active='proyektor')
@@ -339,7 +341,7 @@ def input_peminjaman():
             'status': True
         })
         user.change_status_proyektor(nama_proyektor=proyektor)
-
+        flash('Berhasil Meminjam Proyektor ✨')
         return redirect(url_for('views.input_peminjaman'))
 
     proyektor_tersedia = [proyektor for proyektor in user.get_collection(
@@ -429,7 +431,7 @@ def input_pengembalian():
             'status': True
         })
         user.change_status_proyektor(nama_proyektor=proyektor)
-
+        flash('Proyektor Berhasil Dikembalikan 👍')
         return redirect(url_for('views.input_pengembalian'))
 
     mahasiswa = user.find_mahasiswa()
