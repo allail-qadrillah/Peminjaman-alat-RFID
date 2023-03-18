@@ -199,10 +199,14 @@ def input_mahasiswa():
         flash('Data Mahasiswa Berhasil Ditambahkan')
         return redirect(url_for('views.input_mahasiswa'))
     
-
-    return render_template('input_mahasiswa.html', active='mahasiswa', 
-                            data_jurusan=user.get_collection('jurusan'), 
-                            id = user.get_value_rtdb('id'))
+    if user.get_value_rtdb('id') == '0':
+        flash(['Tidak dapat mengakses input mahasiswa',
+              'scan kartu RFID terlebih dahulu', 'warning'])
+        return redirect(url_for('views.dashboard'))
+    
+    return render_template('input_mahasiswa.html', active='mahasiswa',
+                           data_jurusan=user.get_collection('jurusan'),
+                           id=user.get_value_rtdb('id'))
 
 
 @views.route('/data-mahasiswa', methods=['POST', 'GET'])
@@ -281,7 +285,7 @@ def input_proyektor():
         user.add_document('proyektor', random_string, {
             'id': random_string,
             'id_proyektor': id_proyektor,
-            'nama': nama,
+            'nama': nama.rstrip(),
             'nomor': nomor,
             'kondisi': kondisi,
             'dipinjam': False
@@ -341,13 +345,15 @@ def input_peminjaman():
             'status': True
         })
         user.change_status_proyektor(nama_proyektor=proyektor)
-        flash('Berhasil Meminjam Proyektor ✨')
-        return redirect(url_for('views.input_peminjaman'))
+        flash(['Proyektor Berhasil Dipinjam 👍',
+              f'{nama} telah meminjam proyektor {proyektor}', 'success'])
+        return redirect(url_for('views.dashboard'))
 
     proyektor_tersedia = [proyektor for proyektor in user.get_collection(
         'proyektor') if proyektor['dipinjam'] == False]
-    
-    mahasiswa = user.find_mahasiswa() if user.find_mahasiswa() is not None else {'mahasiswa': ''}
+
+    mahasiswa = user.find_mahasiswa() if user.find_mahasiswa() is not None else {
+        'mahasiswa': ''}
     user.update_value_rtdb('id', "0")
 
     return render_template('input_peminjaman.html', active='peminjaman',
@@ -358,7 +364,7 @@ def input_peminjaman():
                            dosen=user.get_collection('matakuliah'),
                            data_ruang=user.get_collection('ruang'),
                            data_dosen=user.get_collection('dosen'),
-                           mahasiswa= mahasiswa
+                           mahasiswa=mahasiswa
                            )
 
 
@@ -411,18 +417,17 @@ def input_pengembalian():
         random_string = user.random_string()
         waktu = request.form['waktu']
         nama = request.form['nama']
-        nomor = request.form['nomor']
+        nomor_peminjaman = request.form['nomor_peminjaman']
         proyektor = request.form['proyektor']
-        matakuliah = request.form['matakuliah']
         matakuliah = request.form['matakuliah']
         ruang = request.form['ruang']
         dosen = request.form['dosen']
-
         user.add_document('pengembalian', random_string, {
             'id': random_string,
             'waktu': waktu,
             'nama': nama,
-            'nomor': nomor,
+            'nomor_peminjaman': nomor_peminjaman,
+            'nomor_pengembalian': len(user.get_collection('pengembalian')),
             'proyektor': proyektor,
             'matakuliah': matakuliah,
             'matakuliah': matakuliah,
@@ -431,16 +436,21 @@ def input_pengembalian():
             'status': True
         })
         user.change_status_proyektor(nama_proyektor=proyektor)
-        flash('Proyektor Berhasil Dikembalikan 👍')
-        return redirect(url_for('views.input_pengembalian'))
+        user.delete_peminjaman(proyektor)
 
-    mahasiswa = user.find_mahasiswa()
-    peminjaman = user.find_peminjaman()
-    user.update_value_rtdb('id', "0")
+        flash(['Proyektor Berhasil Dikembalikan 👍', f'{nama} telah mengembalikan proyektor {proyektor}', 'success'])
+        return redirect(url_for('views.dashboard'))
+    try:
+        mahasiswa = user.find_mahasiswa()
+        peminjaman = user.find_peminjaman()
+        user.update_value_rtdb('id', "0")
 
-    return render_template('input_pengembalian.html', active='pengembalian',
-                            mahasiswa = mahasiswa,
-                            peminjaman= peminjaman)
+        return render_template('input_pengembalian.html', active='pengembalian',
+                               mahasiswa=mahasiswa,
+                               peminjaman=peminjaman)
+    except:
+        flash(['Tidak dapat mengakses input pengembalian', 'dikarenakan anda harus menscan kartu RFID terlebih dahulu', 'warning'])
+        return redirect(url_for('views.dashboard'))
 
 
 @views.route('/data-pengembalian', methods=['POST', 'GET'])
@@ -449,7 +459,7 @@ def data_pengembalian():
         id = request.form['id']
         waktu = request.form['waktu'].replace('T', '/')
         nama = request.form['nama']
-        nomor = request.form['nomor']
+        nomor_peminjaman = request.form['nomor_peminjaman']
         proyektor = request.form['proyektor']
         matakuliah = request.form['matakuliah']
         matakuliah = request.form['matakuliah']
@@ -458,7 +468,7 @@ def data_pengembalian():
         user.update_document('pengembalian', id, {
             'waktu': waktu,
             'nama': nama,
-            'nomor': nomor,
+            'nomor_peminjaman': nomor_peminjaman,
             'proyektor': proyektor,
             'matakuliah': matakuliah,
             'matakuliah': matakuliah,

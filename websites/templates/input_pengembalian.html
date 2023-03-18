@@ -42,11 +42,7 @@
 
       <div class="form-group">
         <label>No Peminjaman</label>
-        <select name="nomor" class="custom-select rounded-0" id="exampleSelectRounded0">
-          {% for item in peminjaman %}
-          <option>{{ item['nomor_peminjaman'] }}</option>
-          {% endfor %}
-        </select>
+        <input id="no_peminjaman" name="nomor_peminjaman" type="text"  class="form-control" value="pilih proyektor terlebih dahulu" id="exampleInputEmail1" readonly>
       </div>
 
       <div class="form-group">
@@ -57,7 +53,8 @@
 
       <div class="form-group">
         <label>Nama Proyektor</label>
-        <select name="proyektor" class="custom-select rounded-0" id="exampleSelectRounded0">
+        <select id="proyektor_pengembalian" name="proyektor" class="custom-select rounded-0" id="exampleSelectRounded0">
+          <option value="" selected disabled>-- Pilih salah satu --</option>
           {% for item in peminjaman %}
           <option>{{ item['proyektor'] }}</option>
           {% endfor %}
@@ -66,27 +63,22 @@
 
       <div class="form-group">
         <label>Nama Matakuliah</label>
-        <select name="matakuliah" class="custom-select rounded-0" id="exampleSelectRounded0">
-          {% for item in peminjaman %}
-          <option>{{ item['matakuliah'] }}</option>
-          {% endfor %}
-        </select>     </div>
+        <input name="matakuliah" id="matakuliah" type="text" class="form-control" value="pilih proyektor terlebih dahulu"
+          id="exampleInputEmail1" readonly>
+      </div>
 
       <div class="form-group">
         <label>Nama Ruang</label>
-        <select name="ruang" class="custom-select rounded-0" id="exampleSelectRounded0">
-          {% for item in peminjaman %}
-          <option>{{ item['ruang'] }}</option>
-          {% endfor %}
-        </select>     </div>
+        <input name="ruang" id="ruang" type="text" class="form-control" value="pilih proyektor terlebih dahulu"
+          id="exampleInputEmail1" readonly>
+
+      </div>
 
       <div class="form-group">
         <label>Nama Dosen</label>
-        <select name="dosen" class="custom-select rounded-0" id="exampleSelectRounded0">
-          {% for item in peminjaman %}
-          <option>{{ item['dosen'] }}</option>
-          {% endfor %}
-        </select>
+        <input name="dosen" id="dosen" type="text" class="form-control" value="pilih proyektor terlebih dahulu"
+          id="exampleInputEmail1" readonly>
+
       </div>
 
     </div>
@@ -102,6 +94,7 @@
 </div>
 
 {% block script %}
+<script type="module" src="{{url_for('static', filename = 'dist/js/admin/pengembalian.js')}}"></script>
 <script>
   var input = document.querySelector('input[type="datetime-local"]');
   var now = new Date();

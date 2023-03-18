@@ -33,19 +33,22 @@
     <div class="card-body">
       <div class="form-group">
         <label for="exampleInputEmail1">ID Kartu Mahasiswa</label>
-        <input type="number" name="id_kartu" class="form-control" value="{{ id }}" readonly >
+        <input type="number" name="id_kartu" class="form-control" value="{{ id }}" readonly>
       </div>
       <div class="form-group">
         <label for="exampleInputEmail1">NIM Mahasiswa</label>
-        <input type="number" name="nim" class="form-control" id="exampleInputEmail1" placeholder="masukkan nim mahasiswa">
+        <input type="number" name="nim" class="form-control" id="exampleInputEmail1"
+          placeholder="masukkan nim mahasiswa">
       </div>
       <div class="form-group">
         <label for="exampleInputEmail1">Nama Mahasiswa</label>
-        <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="masukkan nama mahasiswa">
+        <input type="text" name="nama" class="form-control" id="exampleInputEmail1"
+          placeholder="masukkan nama mahasiswa">
       </div>
       <div class="form-group">
         <label for="exampleSelectRounded0">Nama Jurusan</label>
         <select name="jurusan" class="custom-select rounded-0" id="exampleSelectRounded0">
+          <option value="" selected disabled>-- Pilih salah satu --</option>
           {% for jurusan in data_jurusan %}
           <option>{{ jurusan['nama'] }}</option>
           {% endfor %}

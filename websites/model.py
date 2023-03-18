@@ -51,6 +51,10 @@ class User(util):
       if proyektor['nama'] == nama_proyektor:
         self.update_document('proyektor', proyektor['id'], {'dipinjam': not proyektor['dipinjam'] })
   
+  def delete_peminjaman(self, proyektor):
+    proyektor = firestore.collection('peminjaman').where('proyektor', '==', proyektor).get()
+    return firestore.collection('peminjaman').document(proyektor[0].to_dict()['id']).delete()
+
   def get_value_rtdb(self, key):
     return db.reference(key).get()
   
@@ -74,5 +78,10 @@ class User(util):
     
     return list_peminjam
 
-# user = User()
+user = User()
+user.update_value_rtdb('id', '2')
+# user.delete_peminjaman('epson')
+# print(user.delete_peminjaman('epson'))
+# user.change_status_proyektor(nama_proyektor="Blanditiis Nam quia ")
 # print(user.find_peminjaman())
+# user.delete_document('peminjaman', 'uVRLM')

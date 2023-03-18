@@ -42,12 +42,14 @@
       <div class="form-group">
         <label for="exampleSelectRounded0">Nama Fakultas</label>
         <select name="fakultas" class="custom-select rounded-0" id="exampleSelectRounded0">
+          <option value="" selected disabled>-- Pilih salah satu --</option>
           {% for fakultas in data_fakultas %}
-            <option>{{ fakultas['nama'] }}</option>
+          <option>{{ fakultas['nama'] }}</option>
           {% endfor %}
         </select>
       </div>
-    </div>
+
+
 
     <div class="card-footer">
       <button type="submit" class="btn btn-primary">Tambahkan</button>
