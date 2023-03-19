@@ -67,7 +67,7 @@ window.scanKartu = () => {
       .catch((error) => {
         console.log(`Terjadi kesalahan saat mendapatkan data id: ${error}`);
       });
-  }, 1000);
+  }, 100);
 
 
 }

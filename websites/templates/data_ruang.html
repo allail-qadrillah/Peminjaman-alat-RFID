@@ -43,7 +43,7 @@
             <td>{{ item['nama'] }}</td>
             <td>{{ item['lantai'] }}</td>
             <td>
-              <a href="" data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
+              <a data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
               <a href="/data-ruang/delete/{{ item['id'] }}" onclick="return confirm('apakah anda ingin menghapusnya?')">Hapus</a>
             </td>
           </tr>

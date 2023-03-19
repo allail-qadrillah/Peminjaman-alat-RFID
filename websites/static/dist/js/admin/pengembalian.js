@@ -25,13 +25,13 @@ function getCollection(db, colRef) {
     });
 }
 
-$('#proyektor_pengembalian').on('change', function () {
-  const nama_proyektor = $(this).val();
+$('#no_proyektor').on('change', function () {
+  const no_proyektor = $(this).val();
 
   getCollection(db, 'peminjaman').then((peminjaman) => {
-    const proyektor = peminjaman.find(item => item.proyektor === nama_proyektor);
+    const proyektor = peminjaman.find(item => item.nomor_peminjaman === no_proyektor);
     if (proyektor) {
-      document.getElementById('no_peminjaman').value = proyektor.nomor_peminjaman;
+      document.getElementById('nama_proyektor').value = proyektor.proyektor;
       document.getElementById('matakuliah').value = proyektor.matakuliah;
       document.getElementById('ruang').value = proyektor.ruang;
       document.getElementById('dosen').value = proyektor.dosen;

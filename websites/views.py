@@ -197,16 +197,18 @@ def input_mahasiswa():
             'nama_jurusan': jurusan,
         })
         flash('Data Mahasiswa Berhasil Ditambahkan')
-        return redirect(url_for('views.input_mahasiswa'))
-    
+        return redirect(url_for('views.dashboard'))
+
     if user.get_value_rtdb('id') == '0':
         flash(['Tidak dapat mengakses input mahasiswa',
               'scan kartu RFID terlebih dahulu', 'warning'])
         return redirect(url_for('views.dashboard'))
     
+    id = user.get_value_rtdb('id')
+    user.update_value_rtdb('id', "0")
     return render_template('input_mahasiswa.html', active='mahasiswa',
                            data_jurusan=user.get_collection('jurusan'),
-                           id=user.get_value_rtdb('id'))
+                           id=id)
 
 
 @views.route('/data-mahasiswa', methods=['POST', 'GET'])
@@ -438,7 +440,8 @@ def input_pengembalian():
         user.change_status_proyektor(nama_proyektor=proyektor)
         user.delete_peminjaman(proyektor)
 
-        flash(['Proyektor Berhasil Dikembalikan 👍', f'{nama} telah mengembalikan proyektor {proyektor}', 'success'])
+        flash(['Proyektor Berhasil Dikembalikan 👍',
+              f'{nama} telah mengembalikan proyektor {proyektor}', 'success'])
         return redirect(url_for('views.dashboard'))
     try:
         mahasiswa = user.find_mahasiswa()
@@ -449,7 +452,8 @@ def input_pengembalian():
                                mahasiswa=mahasiswa,
                                peminjaman=peminjaman)
     except:
-        flash(['Tidak dapat mengakses input pengembalian', 'dikarenakan anda harus menscan kartu RFID terlebih dahulu', 'warning'])
+        flash(['Tidak dapat mengakses input pengembalian',
+              'dikarenakan anda harus menscan kartu RFID terlebih dahulu', 'warning'])
         return redirect(url_for('views.dashboard'))
 
 
