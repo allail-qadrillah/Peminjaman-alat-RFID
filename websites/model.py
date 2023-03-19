@@ -77,11 +77,16 @@ class User(util):
         'nama', '==', nama_mahasiswa).get()]
     
     return list_peminjam
+  
+  def get_range_data(self, collection, start_time, end_time):
+    data_range_waktu = []
+    for item in self.get_collection(collection):
+      if item['waktu'] >= start_time and item['waktu'] <= end_time:
+        data_range_waktu.append(item)
+    return data_range_waktu
 
 user = User()
-user.update_value_rtdb('id', '2')
-# user.delete_peminjaman('epson')
-# print(user.delete_peminjaman('epson'))
-# user.change_status_proyektor(nama_proyektor="Blanditiis Nam quia ")
-# print(user.find_peminjaman())
-# user.delete_document('peminjaman', 'uVRLM')
+# user.update_value_rtdb('id', '2')
+start_time = "2023-03-15"  # Example start time
+end_time = "2023-03-20"  # Example end time
+print( user.get_range_data('pengembalian', start_time, end_time) )
