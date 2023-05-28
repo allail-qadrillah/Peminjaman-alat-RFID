@@ -96,12 +96,12 @@ class User(util):
 
       wb = Workbook()
       ws = wb.active
-      data_pengembalian = self.get_range_data('peminjaman', start_time, end_time)
+      data_pengembalian = self.get_range_data(nama_file, start_time, end_time)
 
       ws.title = nama_file
 
       ws['A1'] = "No"
-      ws['B1'] = "Tanggal Peminjaman"
+      ws['B1'] = f"Tanggal {nama_file}"
       ws['C1'] = "No Pinjam"
       ws['D1'] = "Mahasiswa"
       ws['E1'] = "Proyektor"

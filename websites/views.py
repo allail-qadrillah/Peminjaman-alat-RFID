@@ -334,8 +334,8 @@ def input_peminjaman():
         ruang = request.form['ruang']
         dosen = request.form['dosen']
 
-        kabel_hdmi = request.form.get('hdmi') == 'hdmi'
-        kabel_vga = request.form.get('vga') == 'vga'
+        kabel_hdmi = request.form.get('kabel_hdmi') == 'kabel_hdmi'
+        kabel_vga = request.form.get('kabel_vga') == 'kabel_vga'
         remote = request.form.get('remote') == 'remote'
         kabel_dvi = request.form.get('kabel_dvi') == 'kabel_dvi'
         lensa_pendukung = request.form.get(
@@ -443,11 +443,11 @@ def input_pengembalian():
         ruang = request.form['ruang']
         dosen = request.form['dosen']
 
-        kabel_hdmi = request.form.get('hdmi') == 'hdmi'
-        kabel_vga = request.form.get('vga') == 'vga'
-        remote = request.form.get('remote') == 'remote'
+        kabel_hdmi = request.form.get('kabel_hdmi') == 'kabel_hdmi'
+        kabel_vga = request.form.get('kabel_vga') == 'kabel_vga'
         kabel_dvi = request.form.get('kabel_dvi') == 'kabel_dvi'
-        lensa_pendukung = request.form.get('lensa_pendukung') == 'lensa_pendukung'
+        remote = request.form.get('remote') == 'remote'
+        lensa_pendukung = request.form.get('lensa_pendukung')  == 'lensa_pendukung'
         case_pelindung = request.form.get('case_pelindung') == 'case_pelindung'
         layar = request.form.get('layar') == 'layar'
 
@@ -480,23 +480,18 @@ def input_pengembalian():
               f'{nama} telah mengembalikan proyektor {proyektor}', 'success'])
         return redirect(url_for('views.dashboard'))
 
-    mahasiswa = user.find_mahasiswa()
-    peminjaman = user.find_peminjaman()
-    return render_template('input_pengembalian.html', active='pengembalian',
-                           mahasiswa=mahasiswa,
-                           peminjaman=peminjaman)
-    # try:
-    #     mahasiswa = user.find_mahasiswa()
-    #     peminjaman = user.find_peminjaman()
-    #     user.update_value_rtdb('id', "0")
+    try:
+        mahasiswa = user.find_mahasiswa()
+        peminjaman = user.find_peminjaman()
+        user.update_value_rtdb('id', "0")
 
-    #     return render_template('input_pengembalian.html', active='pengembalian',
-    #                            mahasiswa=mahasiswa,
-    #                            peminjaman=peminjaman)
-    # except:
-    #     flash(['Tidak dapat mengakses input pengembalian',
-    #           'dikarenakan anda harus menscan kartu RFID terlebih dahulu', 'warning'])
-    #     return redirect(url_for('views.dashboard'))
+        return render_template('input_pengembalian.html', active='pengembalian',
+                            mahasiswa=mahasiswa,
+                            peminjaman=peminjaman)
+    except:
+        flash(['Tidak dapat mengakses input pengembalian',
+              'dikarenakan anda harus menscan kartu RFID terlebih dahulu', 'warning'])
+        return redirect(url_for('views.dashboard'))
 
 
 @views.route('/data-pengembalian', methods=['POST', 'GET'])
@@ -547,7 +542,6 @@ def convert_peminjaman():
     if request.method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
-        print(start_time, end_time)
         
         file = user.export_to_excel('peminjaman', start_time, end_time)
         response = make_response(file.getvalue())
@@ -558,3 +552,17 @@ def convert_peminjaman():
 
     return redirect(url_for('views.data_pengembalian'))
 
+@views.route('/data-pengembalian/convert', methods=['POST', 'GET'])
+def convert_pengembalian():
+    if request.method == 'POST':
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
+        
+        file = user.export_to_excel('pengembalian', start_time, end_time)
+        response = make_response(file.getvalue())
+        response.headers['Content-Disposition'] = 'attachment; filename=pengembalian.xlsx'
+        response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        
+        return response
+
+    return redirect(url_for('views.data_pengembalian'))
