@@ -34,6 +34,7 @@
             <th>No Peminjaman</th>
             <th>Mahasiswa</th>
             <th>Proyektor</th>
+            <th>Perangkat Lainnya</th>
             <th>MataKuliah</th>
             <th>Ruang</th>
             <th>Dosen</th>
@@ -50,6 +51,16 @@
             <td>{{ item['nomor_pengembalian'] }}</td>
             <td>{{ item['nama'] }}</td>
             <td>{{ item['proyektor'] }}</td>
+            <td>
+                        <td>
+                          {% for perangkat, nilai in item['perangkat_lainnya'].items() %}
+                        
+                          <p>{% if nilai %}
+                            {{perangkat}}
+                            {% endif %}</p>
+                          {% endfor %}
+                        </td>
+            </td>
             <td>{{ item['matakuliah'] }}</td>
             <td>{{ item['ruang'] }}</td>
             <td>{{ item['dosen'] }}</td>

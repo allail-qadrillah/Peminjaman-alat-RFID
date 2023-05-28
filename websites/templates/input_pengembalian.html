@@ -45,7 +45,7 @@
         <select id="no_proyektor" name="nomor_peminjaman" class="custom-select rounded-0" id="exampleSelectRounded0">
           <option value="" selected disabled>-- Pilih salah satu --</option>
           {% for item in peminjaman %}
-            <option>{{ item['nomor_peminjaman'] }}</option>
+          <option>{{ item['nomor_peminjaman'] }}</option>
           {% endfor %}
         </select>
       </div>
@@ -60,6 +60,52 @@
         <label>Nama Proyektor</label>
         <input id="nama_proyektor" name="proyektor" type="text" class="form-control"
           value="pilih nomor proyektor terlebih dahulu" id="exampleInputEmail1" readonly>
+      </div>
+
+      <div class="form-group">
+        <label for="">Perangkat Lainnya</label>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input id="kabel_hdmi" name="hdmi" type="checkbox" class="form-check-input" disabled value="kabel_hdmi">
+            Kabel HDMI
+            <i class="input-helper"></i></label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input id="kabel_vga" name="vga" type="checkbox" class="form-check-input" disabled value="kabel_vga">
+            Kabel VGA
+            <i class="input-helper"></i></label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input id="kabel_dvi" name="dvi" type="checkbox" class="form-check-input" disabled value="kabel_dvi">
+            Kabel DVI
+            <i class="input-helper"></i></label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input id="lensa_pendukung" name="lensa_pendukung" type="checkbox" class="form-check-input" disabled value="lensa_pendukung">
+            Lensa Pendukung
+            <i class="input-helper"></i></label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input id="case_pelindung" name="case_pelindung" type="checkbox" class="form-check-input" disabled value="case_pelindung">
+            Case Pelindung
+            <i class="input-helper"></i></label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input id="remote" type="checkbox" name="remote" class="form-check-input" disabled value="remote">
+            Remote
+            <i class="input-helper"></i></label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input id="layar" type="checkbox" name="layar" class="form-check-input"disabled value="layar">
+            Layar
+            <i class="input-helper"></i></label>
+        </div>
       </div>
 
       <div class="form-group">

@@ -22,6 +22,30 @@
     </div>
   </div>
 
+  <form action="{{ url_for('views.convert_peminjaman') }}" method="post">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>Tanggal Awal</label>
+          <input type="datetime-local" name="start_time" class="form-control">
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>Tanggal Akhir</label>
+          <input type="datetime-local" name="end_time" class="form-control">
+        </div>
+      </div>
+      <div class="col mt-2">
+        <button type="submit" class="mt-4 btn btn-danger btn-icon-text">
+          <i class="ti-upload btn-icon-prepend"></i>
+          Convert Data
+        </button>
+      </div>
+    </div>
+  </form>
+
+
   <div class="container-fluid table-responsive ">
     <div class="row bg-light mt-12 rounded-6">
 
@@ -33,6 +57,7 @@
             <th>No Pinjam</th>
             <th>Mahasiswa</th>
             <th>Proyektor</th>
+            <th>Perangkat Lainnya</th>
             <th>Mata Kuliah</th>
             <th>Ruang</th>
             <th>Dosen</th>
@@ -48,6 +73,14 @@
             <td>{{ item['nomor_peminjaman'] }}</td>
             <td>{{ item['nama'] }}</td>
             <td>{{ item['proyektor'] }}</td>
+            <td>
+              {% for perangkat, nilai in item['perangkat_lainnya'].items() %}
+
+              <p>{% if nilai %}
+                {{perangkat}}
+                {% endif %}</p>
+              {% endfor %}
+            </td>
             <td>{{ item['matakuliah'] }}</td>
             <td>{{ item['ruang'] }}</td>
             <td>{{ item['dosen'] }}</td>
@@ -84,13 +117,14 @@
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">No Peminjaman</label>
-                    <input type="number" name="nomor" class="form-control" value="{{ item['nomor_peminjaman']}}" readonly>
+                    <input type="number" name="nomor" class="form-control" value="{{ item['nomor_peminjaman']}}"
+                      readonly>
                   </div>
 
                   <div class="form-group">
                     <label for="exampleInputEmail1">Nama Mahasiswa</label>
-                    <input type="text" name="nama" class="form-control" value="{{ item['nama']}}" id="exampleInputEmail1"
-                      placeholder="masukkan nama mahasiswa">
+                    <input type="text" name="nama" class="form-control" value="{{ item['nama']}}"
+                      id="exampleInputEmail1" placeholder="masukkan nama mahasiswa">
                   </div>
 
                   <div class="form-group">

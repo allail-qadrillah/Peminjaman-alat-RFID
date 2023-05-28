@@ -30,11 +30,28 @@ $('#no_proyektor').on('change', function () {
 
   getCollection(db, 'peminjaman').then((peminjaman) => {
     const proyektor = peminjaman.find(item => item.nomor_peminjaman === no_proyektor);
+    const perangkat_lainnya = proyektor.perangkat_lainnya
     if (proyektor) {
       document.getElementById('nama_proyektor').value = proyektor.proyektor;
       document.getElementById('matakuliah').value = proyektor.matakuliah;
       document.getElementById('ruang').value = proyektor.ruang;
       document.getElementById('dosen').value = proyektor.dosen;
-    }
+
+      var kabel_hdmi = document.getElementById("kabel_hdmi");
+      var kabel_vga = document.getElementById("kabel_vga");
+      var kabel_dvi = document.getElementById("kabel_dvi");
+      var lensa_pendukung = document.getElementById("lensa_pendukung");
+      var case_pelindung = document.getElementById("case_pelindung");
+      var remote = document.getElementById("remote");
+      var layar = document.getElementById("layar");
+
+      kabel_hdmi.checked = perangkat_lainnya['kabel hdmi']
+      kabel_vga.checked = perangkat_lainnya['kabel vga']
+      kabel_dvi.checked = perangkat_lainnya['kabel dvi']
+      lensa_pendukung.checked = perangkat_lainnya['lensa pendukung']
+      case_pelindung.checked = perangkat_lainnya['case pelindung']
+      remote.checked = perangkat_lainnya['remote']
+      layar.checked = perangkat_lainnya['layar']
+   }
   });
 });

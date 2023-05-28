@@ -42,19 +42,65 @@
       <div class="form-group">
         <label for="exampleSelectRounded0">Nama Proyektor</label>
         <select name="proyektor" class="custom-select rounded-0" id="exampleSelectRounded0">
-        
+
           {%if data_proyektor %}
 
-            <option  selected disabled>-- Pilih salah satu --</option>
-            {% for proyektor in data_proyektor %}
-            <option>{{ proyektor['nama'] }}</option>
-            {% endfor %}
-            
+          <option selected disabled>-- Pilih salah satu --</option>
+          {% for proyektor in data_proyektor %}
+          <option>{{ proyektor['nama'] }}</option>
+          {% endfor %}
+
           {% else %}
-            <option value="" selected disabled>-- tidak ada proyektor yang tersedia --</option>
+          <option value="" selected disabled>-- tidak ada proyektor yang tersedia --</option>
           {% endif %}
 
         </select>
+
+        <div class="form-group">
+          <label for="">Perangkat Lainnya</label>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input name="kabel_hdmi" type="checkbox" class="form-check-input" value="kabel_hdmi">
+              Kabel HDMI
+              <i class="input-helper"></i></label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input name="kabel_vga" type="checkbox" class="form-check-input" value="kabel_vga">
+              Kabel VGA
+              <i class="input-helper"></i></label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input name="kabel_dvi" type="checkbox" class="form-check-input" value="kabel_dvi">
+              Kabel DVI
+              <i class="input-helper"></i></label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input name="lensa_pendukung" type="checkbox" class="form-check-input" value="lensa_pendukung">
+              Lensa Pendukung
+              <i class="input-helper"></i></label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input name="case_pelindung" type="checkbox" class="form-check-input" value="case_pelindung">
+              Case Pelindung
+              <i class="input-helper"></i></label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input name="remote" type="checkbox" class="form-check-input" value="remote">
+              Remote
+              <i class="input-helper"></i></label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input name="layar" type="checkbox" class="form-check-input" value="layar">
+              Layar
+              <i class="input-helper"></i></label>
+          </div>
+        </div>
 
         <div class="form-group">
           <label for="exampleSelectRounded0">Nama Matakuliah</label>

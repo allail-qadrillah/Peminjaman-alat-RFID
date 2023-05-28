@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, make_response
 from .model import User
 views = Blueprint('views', __name__)
 
@@ -203,7 +203,7 @@ def input_mahasiswa():
         flash(['Tidak dapat mengakses input mahasiswa',
               'scan kartu RFID terlebih dahulu', 'warning'])
         return redirect(url_for('views.dashboard'))
-    
+
     id = user.get_value_rtdb('id')
     user.update_value_rtdb('id', "0")
     return render_template('input_mahasiswa.html', active='mahasiswa',
@@ -334,6 +334,15 @@ def input_peminjaman():
         ruang = request.form['ruang']
         dosen = request.form['dosen']
 
+        kabel_hdmi = request.form.get('hdmi') == 'hdmi'
+        kabel_vga = request.form.get('vga') == 'vga'
+        remote = request.form.get('remote') == 'remote'
+        kabel_dvi = request.form.get('kabel_dvi') == 'kabel_dvi'
+        lensa_pendukung = request.form.get(
+            'lensa_pendukung') == 'lensa_pendukung'
+        case_pelindung = request.form.get('case_pelindung') == 'case_pelindung'
+        layar = request.form.get('layar') == 'layar'
+
         user.add_document('peminjaman', random_string, {
             'id': random_string,
             'waktu': waktu,
@@ -344,7 +353,16 @@ def input_peminjaman():
             'matakuliah': matakuliah,
             'ruang': ruang,
             'dosen': dosen,
-            'status': True
+            'status': True,
+            'perangkat_lainnya': {
+                'kabel hdmi': kabel_hdmi,
+                'kabel vga': kabel_vga,
+                'remote': remote,
+                'kabel dvi': kabel_dvi,
+                'lensa pendukung': lensa_pendukung,
+                'case pelindung': case_pelindung,
+                'layar': layar
+            }
         })
         user.change_status_proyektor(nama_proyektor=proyektor)
         flash(['Proyektor Berhasil Dipinjam 👍',
@@ -424,6 +442,15 @@ def input_pengembalian():
         matakuliah = request.form['matakuliah']
         ruang = request.form['ruang']
         dosen = request.form['dosen']
+
+        kabel_hdmi = request.form.get('hdmi') == 'hdmi'
+        kabel_vga = request.form.get('vga') == 'vga'
+        remote = request.form.get('remote') == 'remote'
+        kabel_dvi = request.form.get('kabel_dvi') == 'kabel_dvi'
+        lensa_pendukung = request.form.get('lensa_pendukung') == 'lensa_pendukung'
+        case_pelindung = request.form.get('case_pelindung') == 'case_pelindung'
+        layar = request.form.get('layar') == 'layar'
+
         user.add_document('pengembalian', random_string, {
             'id': random_string,
             'waktu': waktu,
@@ -435,7 +462,16 @@ def input_pengembalian():
             'matakuliah': matakuliah,
             'ruang': ruang,
             'dosen': dosen,
-            'status': True
+            'status': True,
+            'perangkat_lainnya': {
+                'kabel hdmi': kabel_hdmi,
+                'kabel vga': kabel_vga,
+                'remote': remote,
+                'kabel dvi': kabel_dvi,
+                'lensa pendukung': lensa_pendukung,
+                'case pelindung': case_pelindung,
+                'layar': layar
+            }
         })
         user.change_status_proyektor(nama_proyektor=proyektor)
         user.delete_peminjaman(proyektor)
@@ -443,18 +479,24 @@ def input_pengembalian():
         flash(['Proyektor Berhasil Dikembalikan 👍',
               f'{nama} telah mengembalikan proyektor {proyektor}', 'success'])
         return redirect(url_for('views.dashboard'))
-    try:
-        mahasiswa = user.find_mahasiswa()
-        peminjaman = user.find_peminjaman()
-        user.update_value_rtdb('id', "0")
 
-        return render_template('input_pengembalian.html', active='pengembalian',
-                               mahasiswa=mahasiswa,
-                               peminjaman=peminjaman)
-    except:
-        flash(['Tidak dapat mengakses input pengembalian',
-              'dikarenakan anda harus menscan kartu RFID terlebih dahulu', 'warning'])
-        return redirect(url_for('views.dashboard'))
+    mahasiswa = user.find_mahasiswa()
+    peminjaman = user.find_peminjaman()
+    return render_template('input_pengembalian.html', active='pengembalian',
+                           mahasiswa=mahasiswa,
+                           peminjaman=peminjaman)
+    # try:
+    #     mahasiswa = user.find_mahasiswa()
+    #     peminjaman = user.find_peminjaman()
+    #     user.update_value_rtdb('id', "0")
+
+    #     return render_template('input_pengembalian.html', active='pengembalian',
+    #                            mahasiswa=mahasiswa,
+    #                            peminjaman=peminjaman)
+    # except:
+    #     flash(['Tidak dapat mengakses input pengembalian',
+    #           'dikarenakan anda harus menscan kartu RFID terlebih dahulu', 'warning'])
+    #     return redirect(url_for('views.dashboard'))
 
 
 @views.route('/data-pengembalian', methods=['POST', 'GET'])
@@ -498,3 +540,21 @@ def data_pengembalian():
 def delete_data_pengembalian(id):
     user.delete_document('pengembalian', id)
     return redirect(url_for('views.data_pengembalian'))
+
+
+@views.route('/data-peminjaman/convert', methods=['POST', 'GET'])
+def convert_peminjaman():
+    if request.method == 'POST':
+        start_time = request.form['start_time']
+        end_time = request.form['end_time']
+        print(start_time, end_time)
+        
+        file = user.export_to_excel('peminjaman', start_time, end_time)
+        response = make_response(file.getvalue())
+        response.headers['Content-Disposition'] = 'attachment; filename=peminjaman.xlsx'
+        response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        
+        return response
+
+    return redirect(url_for('views.data_pengembalian'))
+
