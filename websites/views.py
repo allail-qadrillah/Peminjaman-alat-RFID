@@ -384,7 +384,8 @@ def input_peminjaman():
                            dosen=user.get_collection('matakuliah'),
                            data_ruang=user.get_collection('ruang'),
                            data_dosen=user.get_collection('dosen'),
-                           mahasiswa=mahasiswa
+                           mahasiswa=mahasiswa,
+                           komponen_pendukung=user.get_collection('komponen_pendukung')
                            )
 
 
@@ -447,7 +448,8 @@ def input_pengembalian():
         kabel_vga = request.form.get('kabel_vga') == 'kabel_vga'
         kabel_dvi = request.form.get('kabel_dvi') == 'kabel_dvi'
         remote = request.form.get('remote') == 'remote'
-        lensa_pendukung = request.form.get('lensa_pendukung')  == 'lensa_pendukung'
+        lensa_pendukung = request.form.get(
+            'lensa_pendukung') == 'lensa_pendukung'
         case_pelindung = request.form.get('case_pelindung') == 'case_pelindung'
         layar = request.form.get('layar') == 'layar'
 
@@ -486,8 +488,8 @@ def input_pengembalian():
         user.update_value_rtdb('id', "0")
 
         return render_template('input_pengembalian.html', active='pengembalian',
-                            mahasiswa=mahasiswa,
-                            peminjaman=peminjaman)
+                               mahasiswa=mahasiswa,
+                               peminjaman=peminjaman)
     except:
         flash(['Tidak dapat mengakses input pengembalian',
               'dikarenakan anda harus menscan kartu RFID terlebih dahulu', 'warning'])
@@ -542,27 +544,28 @@ def convert_peminjaman():
     if request.method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
-        
+
         file = user.export_to_excel('peminjaman', start_time, end_time)
         response = make_response(file.getvalue())
         response.headers['Content-Disposition'] = 'attachment; filename=peminjaman.xlsx'
         response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        
+
         return response
 
     return redirect(url_for('views.data_pengembalian'))
+
 
 @views.route('/data-pengembalian/convert', methods=['POST', 'GET'])
 def convert_pengembalian():
     if request.method == 'POST':
         start_time = request.form['start_time']
         end_time = request.form['end_time']
-        
+
         file = user.export_to_excel('pengembalian', start_time, end_time)
         response = make_response(file.getvalue())
         response.headers['Content-Disposition'] = 'attachment; filename=pengembalian.xlsx'
         response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        
+
         return response
 
     return redirect(url_for('views.data_pengembalian'))

@@ -5,7 +5,9 @@ import string
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 credential = {
     "type": "service_account",
