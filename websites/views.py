@@ -566,3 +566,44 @@ def convert_pengembalian():
         return response
 
     return redirect(url_for('views.data_pengembalian'))
+
+
+@views.route('/input-komponen-pendukung', methods=['POST', 'GET'])
+def input_komponen_pendukung():
+    if request.method == 'POST':
+        random_string = user.random_string()
+        nama = request.form['nama']
+        jumlah = request.form['jumlah']
+        kondisi = request.form['kondisi']
+        user.add_document('komponen_pendukung', random_string, {
+            'id': random_string,
+            'nama': nama.rstrip(),
+            'jumlah': jumlah,
+            'kondisi': kondisi
+        })
+        flash('Data Komponen Pendukung Berhasil Ditambahkan')
+
+        return redirect(url_for('views.input_komponen_pendukung'))
+    return render_template('input_komponen_pendukung.html', active='komponen-pendukung')
+
+
+@views.route('/data-komponen-pendukung', methods=['POST', 'GET'])
+def data_komponen_pendukung():
+    if request.method == 'POST':
+        id = request.form['id']
+        nama = request.form['nama']
+        jumlah = request.form['jumlah']
+        kondisi = request.form['kondisi']
+        user.update_document('komponen_pendukung', id, {
+            'id': id,
+            'nama': nama.rstrip(),
+            'jumlah': jumlah,
+            'kondisi': kondisi
+        })
+    return render_template('data_komponen_pendukung.html', active='komponen-pendukung', data=user.get_collection('komponen_pendukung'))
+
+
+@views.route('/data-komponen-pendukung/delete/<id>', methods=['POST', 'GET'])
+def delete_komponen_pendukung(id):
+    user.delete_document('komponen_pendukung', id)
+    return redirect(url_for('views.data_komponen_pendukung'))

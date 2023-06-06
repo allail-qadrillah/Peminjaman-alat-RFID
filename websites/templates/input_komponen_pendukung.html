@@ -1,0 +1,59 @@
+{% extends 'templates/sidebar.html' %}
+
+{% block body %}
+<div class="content-wrapper ">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Input Komponen Pendukung</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Komponen Pendukung</a></li>
+            <li class="breadcrumb-item active">Input Komponen Pendukung</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages%}
+  <div class="alert alert-success alert-dismissible custom-alert mt-5" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h5><i class="icon fas fa-check-circle"></i>{{ message }}</h5>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+  <form action="{{ url_for('views.input_komponen_pendukung') }}" , method="POST">
+    <div class="card-body">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Nama Komponen Pendukung</label>
+        <input type="text" name="nama" class="form-control" placeholder="masukkan nama Komponen Pendukung">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Jumlah Komponen Pendukung</label>
+        <input type="number" name="jumlah" class="form-control" placeholder="masukkan nama Komponen Pendukung">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Kondisi Komponen Pendukung</label>
+        <select name="kondisi" class="custom-select rounded-0" id="exampleSelectRounded0">
+          <option>Baik</option>
+          <option>Rusak</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Tambahkan</button>
+    </div>
+  </form>
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'templates/sidebar.html' %}
+
+{% block link %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper ">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Data Komponen Pendukung</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Komponen Pendukung</a></li>
+            <li class="breadcrumb-item active">Data Komponen Pendukung</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid table-responsive ">
+    <div class="row bg-light mt-12 rounded-6">
+
+      <table class="table table-hover ">
+        <thead class="thead-dark">
+          <tr>
+            <th>No</th>
+            <th>ID Komponen Pendukung</th>
+            <th>Nama Komponen Pendukung</th>
+            <th>Jumlah Komponen Pendukung</th>
+            <th>Kondisi Komponen Pendukung</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in data %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ item['id'] }}</td>
+            <td>{{ item['nama'] }}</td>
+            <td>{{ item['jumlah'] }}</td>
+            <td>{{ item['kondisi'] }}</td>
+            <td>
+              <a href="" data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
+              <a href="/data-komponen-pendukung/delete/{{ item['id'] }}"
+                onclick="return confirm('apakah anda ingin menghapusnya?')">Hapus</a>
+            </td>
+          </tr>
+        </tbody>
+
+        <div class="modal fade" id="modal-edit{{ item['id'] }}" tabindex="-1" aria-labelledby="dataLabel"
+          aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="dataLabel">Edit Komponen Pendukung</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form action="{{ url_for('views.data_komponen_pendukung') }}" method="POST"
+                  enctype="multipart/form-data">
+
+                  <div class="form-group">
+                    <input type="hidden" name="id" value="{{ item['id'] }}">
+                    <label>Nama Komponen Pendukung</label>
+                    <input type="text" class="form-control" name="nama" placeholder="namanya apa?"
+                      value="{{ item['nama'] }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Jumlah Komponen Pendukung</label>
+                    <input type="number" class="form-control" name="jumlah" placeholder="jumlahnya berapa?"
+                      value="{{ item['jumlah'] }}">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Kondisi Komponen Pendukung</label>
+                    <select name="kondisi" class="custom-select rounded-0" id="exampleSelectRounded0">
+                      <option>Baik</option>
+                      <option>Rusak</option>
+                    </select>
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

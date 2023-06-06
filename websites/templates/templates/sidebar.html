@@ -129,6 +129,25 @@
               </ul>
             </li>
 
+            <li class="nav-item {% if active=='komponen-pendukung' %}menu-open{%endif %}">
+              <a href="" class="nav-link">
+                <p>Komponen Pendukung<i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview ml-4">
+                <li class="nav-item">
+                  <a href="{{url_for('views.input_komponen_pendukung')}}" class="nav-link">
+                    <p>Input Komponen Pendukung</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{url_for('views.data_komponen_pendukung')}}" class="nav-link">
+                    <p>Data Komponen Pendukung</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
             <li class="nav-item {% if active=='mahasiswa' %}menu-open{%endif %}">
               <a href="" class="nav-link">
                 <p>mahasiswa<i class="right fas fa-angle-left"></i>
