@@ -32,6 +32,12 @@ function loading() {
 
 }
 
+window.resetState = () => {
+  set(ref(rtdb, '/scan'), 0)
+  set(ref(rtdb, '/id'), 0)
+  alert("state direset. silahkan scan kartu ✨")
+}
+
 window.scanKartu = () => {
   document.getElementById('emoji').innerHTML = "🔃";
   loading()
@@ -68,7 +74,5 @@ window.scanKartu = () => {
         console.log(`Terjadi kesalahan saat mendapatkan data id: ${error}`);
       });
   }, 100);
-
-
 }
 
