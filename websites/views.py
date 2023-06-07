@@ -644,3 +644,15 @@ def laporan_peminjaman():
                            data_ruang=user.get_collection('ruang'),
                            data_dosen=user.get_collection('dosen')
                            )
+
+
+@views.route('/laporan-proyektor', methods=['POST', 'GET'])
+def laporan_proyektor():
+    
+    proyektor_tersedia = [proyektor for proyektor in user.get_collection(
+        'proyektor') if proyektor['dipinjam'] == False]
+    
+    return render_template('laporan_proyektor.html', active='laporan', 
+                           data=user.get_collection('proyektor'),
+                           data_proyektor=proyektor_tersedia
+                           )
