@@ -610,3 +610,37 @@ def data_komponen_pendukung():
 def delete_komponen_pendukung(id):
     user.delete_document('komponen_pendukung', id)
     return redirect(url_for('views.data_komponen_pendukung'))
+
+
+@views.route('/laporan-pengembalian', methods=['POST', 'GET'])
+def laporan_pengembalian():
+
+    proyektor_tersedia = [proyektor for proyektor in user.get_collection(
+        'proyektor') if proyektor['dipinjam'] == False]
+    return render_template('laporan_pengembalian.html', active='laporan',
+                           data=user.get_collection('pengembalian'),
+                           jumlah_peminjam=len(
+                               user.get_collection('pengembalian')),
+                           data_proyektor=proyektor_tersedia,
+                           data_matakuliah=user.get_collection('matakuliah'),
+                           dosen=user.get_collection('matakuliah'),
+                           data_ruang=user.get_collection('ruang'),
+                           data_dosen=user.get_collection('dosen')
+                           )
+
+
+@views.route('/laporan-peminjaman', methods=['POST', 'GET'])
+def laporan_peminjaman():
+
+    proyektor_tersedia = [proyektor for proyektor in user.get_collection(
+        'proyektor') if proyektor['dipinjam'] == False]
+    return render_template('laporan_peminjaman.html', active='laporan',
+                           data=user.get_collection('peminjaman'),
+                           jumlah_peminjam=len(
+                               user.get_collection('peminjaman')),
+                           data_proyektor=proyektor_tersedia,
+                           data_matakuliah=user.get_collection('matakuliah'),
+                           dosen=user.get_collection('matakuliah'),
+                           data_ruang=user.get_collection('ruang'),
+                           data_dosen=user.get_collection('dosen')
+                           )

@@ -1,0 +1,78 @@
+{% extends 'templates/sidebar.html' %}
+
+{% block link %}
+
+{% endblock %}
+
+{% block body %}
+<div class="content-wrapper ">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Data Pengembalian</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="">Pengembalian</a></li>
+            <li class="breadcrumb-item active">Data Pengembalian</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid table-responsive ">
+    <div class="row bg-light mt-12 rounded-6">
+
+      <table class="table table-hover ">
+        <thead class="thead-dark">
+          <tr>
+            <th>No</th>
+            <th>Tanggal Peminjaman</th>
+            <th>No Pengembalian</th>
+            <th>No Peminjaman</th>
+            <th>Mahasiswa</th>
+            <th>Proyektor</th>
+            <th>Perangkat Lainnya</th>
+            <th>MataKuliah</th>
+            <th>Ruang</th>
+            <th>Dosen</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in data %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ item['waktu'] }}</td>
+            <td>{{ item['nomor_peminjaman'] }}</td>
+            <td>{{ item['nomor_pengembalian'] }}</td>
+            <td>{{ item['nama'] }}</td>
+            <td>{{ item['proyektor'] }}</td>
+            <td>
+              {% for perangkat, nilai in item['perangkat_lainnya'].items() %}
+
+              <p>{% if nilai %}
+                {{perangkat}}
+                {% endif %}</p>
+              {% endfor %}
+            </td>
+            <td>{{ item['matakuliah'] }}</td>
+            <td>{{ item['ruang'] }}</td>
+            <td>{{ item['dosen'] }}</td>
+            {% if item['status'] %}
+            <td>Pinjam</td>
+            {% else %}
+            <td>Dikembalikan</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
