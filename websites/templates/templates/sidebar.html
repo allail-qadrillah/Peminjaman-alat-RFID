@@ -243,6 +243,25 @@
               </ul>
             </li>
 
+            <li class="nav-item {% if active=='laporan' %}menu-open{%endif %}">
+              <a href="" class="nav-link">
+                <p>Laporan<i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview ml-4">
+                <li class="nav-item">
+                  <a href="{{url_for('views.laporan_peminjaman')}}" class="nav-link">
+                    <p>Laporan Peminjaman</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{{url_for('views.laporan_pengembalian')}}" class="nav-link">
+                    <p>Laporan Pengembalian</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
 
             
 
