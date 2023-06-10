@@ -6,24 +6,11 @@
 
 {% block body %}
 <div class="content-wrapper ">
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0">Data Peminjaman</h1>
-        </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="">Peminjaman</a></li>
-            <li class="breadcrumb-item active">Data Peminjaman</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="container-fluid table-responsive ">
     <div class="row bg-light mt-12 rounded-6">
+
+      <h1 class="mx-auto text-center">DATA PEMINJAMAN</h1>
 
       <table class="table table-hover">
         <thead class="thead-dark">
@@ -68,6 +55,28 @@
           {% endfor %}
 
         </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="4"></td> <!-- Tambahkan colspan yang sesuai -->
+            <td colspan="1"><strong>JUMLAH</strong></td> <!-- Pindahkan kata "Total" ke kolom keempat -->
+            <td colspan="4"></td> <!-- Tambahkan colspan yang sesuai -->
+            <td>
+              {{ data|length }}
+            </td>
+
+          </tr>
+        </tfoot>
+
+
+
+        <!-- <tfoot>
+          <tr>
+            <td colspan="9"><strong>Total</strong></td>
+            <td >1</td>
+          </tr>
+        </tfoot> -->
+
 
       </table>
     </div>
