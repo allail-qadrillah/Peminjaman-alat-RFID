@@ -196,19 +196,18 @@ def input_mahasiswa():
             'nama': nama,
             'nama_jurusan': jurusan,
         })
-        flash('Data Mahasiswa Berhasil Ditambahkan')
+        user.update_value_rtdb('id', 0)
         return redirect(url_for('views.dashboard'))
-
-    if user.get_value_rtdb('id') == '0':
+    
+    if user.get_value_rtdb('id')  == 0 or user.get_value_rtdb('id') == "0":
         flash(['Tidak dapat mengakses input mahasiswa',
               'scan kartu RFID terlebih dahulu', 'warning'])
         return redirect(url_for('views.dashboard'))
-
-    id = user.get_value_rtdb('id')
-    user.update_value_rtdb('id', "0")
-    return render_template('input_mahasiswa.html', active='mahasiswa',
-                           data_jurusan=user.get_collection('jurusan'),
-                           id=id)
+    else:
+        id = user.get_value_rtdb('id')
+        return render_template('input_mahasiswa.html', active='mahasiswa',
+                            data_jurusan=user.get_collection('jurusan'),
+                            id=id)
 
 
 @views.route('/data-mahasiswa', methods=['POST', 'GET'])
@@ -385,7 +384,8 @@ def input_peminjaman():
                            data_ruang=user.get_collection('ruang'),
                            data_dosen=user.get_collection('dosen'),
                            mahasiswa=mahasiswa,
-                           komponen_pendukung=user.get_collection('komponen_pendukung')
+                           komponen_pendukung=user.get_collection(
+                               'komponen_pendukung')
                            )
 
 
@@ -648,11 +648,11 @@ def laporan_peminjaman():
 
 @views.route('/laporan-proyektor', methods=['POST', 'GET'])
 def laporan_proyektor():
-    
+
     proyektor_tersedia = [proyektor for proyektor in user.get_collection(
         'proyektor') if proyektor['dipinjam'] == False]
-    
-    return render_template('laporan_proyektor.html', active='laporan', 
+
+    return render_template('laporan_proyektor.html', active='laporan',
                            data=user.get_collection('proyektor'),
                            data_proyektor=proyektor_tersedia
                            )

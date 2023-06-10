@@ -49,9 +49,9 @@ window.scanKartu = () => {
     get(child(ref(rtdb), 'id'))
       .then((snapshot) => {
         const id = snapshot.val();
-        if (id !== "0") {
+        if (id !== 0) {
           clearInterval(intervalId);
-          set(ref(rtdb, '/scan'), 0)
+          // set(ref(rtdb, '/scan'), 0)
           // cek id
           getCollection(db, 'mahasiswa').then((mahasiswa) => {
             if (mahasiswa.find(m => m.id_kartu === id)) {
