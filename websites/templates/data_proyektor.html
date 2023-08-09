@@ -49,9 +49,9 @@
               <a href="/data-proyektor/delete/{{ item['id'] }}"
                 onclick="return confirm('apakah anda ingin menghapusnya?')">Hapus</a>
               {% if item['dipinjam'] %}
-              <a style="color:red">Pinjam</a>
+              <a style="color:red">Di Pinjam</a>
               {% else %}
-              <a style="color:green">Pinjam</a>
+              <a style="color:green">Tersedia</a>
               {% endif %}
             </td>
           </tr>

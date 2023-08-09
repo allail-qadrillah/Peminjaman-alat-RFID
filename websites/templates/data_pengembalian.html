@@ -52,7 +52,7 @@
         <thead class="thead-dark">
           <tr>
             <th>No</th>
-            <th>Tanggal Peminjaman</th>
+            <th>Tanggal Pengembalian</th>
             <th>No Pengembalian</th>
             <th>No Peminjaman</th>
             <th>Mahasiswa</th>
@@ -86,14 +86,12 @@
             <td>{{ item['ruang'] }}</td>
             <td>{{ item['dosen'] }}</td>
             {% if item['status'] %}
-            <td>Pinjam</td>
-            {% else %}
             <td>Dikembalikan</td>
+            {% else %}
+            <td>Pinjam</td>
             {% endif %}
             <td>
               <a href="" data-toggle="modal" data-target="#modal-edit{{ item['id'] }}">Edit</a>
-              <a href="/data-pengembalian/delete/{{ item['id'] }}"
-                onclick="return confirm('apakah anda ingin menghapusnya?')">Hapus</a>
             </td>
           </tr>
         </tbody>
