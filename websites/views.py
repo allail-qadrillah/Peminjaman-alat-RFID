@@ -12,7 +12,7 @@ def dashboard():
         'mahasiswa': len(user.get_collection('mahasiswa')),
         'ruang': len(user.get_collection('ruang')),
         'fakultas': len(user.get_collection('fakultas')),
-        'proyektor': len(user.get_collection('proyektor')),
+        'proyektor': len([item for item in user.get_collection('proyektor') if not item.get('dipinjam')]),
         'peminjaman': len(user.get_collection('peminjaman')),
         'pengembalian': len(user.get_collection('pengembalian')),
     })
@@ -363,6 +363,27 @@ def input_peminjaman():
                 'layar': layar
             }
         })
+        user.add_document('laporan_peminjaman', random_string, {
+            'id': random_string,
+            'waktu': waktu,
+            'nama': nama,
+            'nomor_peminjaman': nomor,
+            'proyektor': proyektor,
+            'matakuliah': matakuliah,
+            'matakuliah': matakuliah,
+            'ruang': ruang,
+            'dosen': dosen,
+            'status': True,
+            'perangkat_lainnya': {
+                'kabel hdmi': kabel_hdmi,
+                'kabel vga': kabel_vga,
+                'remote': remote,
+                'kabel dvi': kabel_dvi,
+                'lensa pendukung': lensa_pendukung,
+                'case pelindung': case_pelindung,
+                'layar': layar
+            }
+        })
         user.change_status_proyektor(nama_proyektor=proyektor)
         flash(['Proyektor Berhasil Dipinjam 👍',
               f'{nama} telah meminjam proyektor {proyektor}', 'success'])
@@ -637,9 +658,9 @@ def laporan_peminjaman():
     proyektor_tersedia = [proyektor for proyektor in user.get_collection(
         'proyektor') if proyektor['dipinjam'] == False]
     return render_template('laporan_peminjaman.html', active='laporan',
-                           data=user.get_collection('peminjaman'),
+                           data=user.get_collection('laporan_peminjaman'),
                            jumlah_peminjam=len(
-                               user.get_collection('peminjaman')),
+                               user.get_collection('laporan_peminjaman')),
                            data_proyektor=proyektor_tersedia,
                            data_matakuliah=user.get_collection('matakuliah'),
                            dosen=user.get_collection('matakuliah'),
