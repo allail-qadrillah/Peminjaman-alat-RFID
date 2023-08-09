@@ -283,17 +283,23 @@ def input_proyektor():
         nama = request.form['nama']
         nomor = request.form['nomor']
         kondisi = request.form['kondisi']
-        user.add_document('proyektor', random_string, {
-            'id': random_string,
-            'id_proyektor': id_proyektor,
-            'nama': nama.rstrip(),
-            'nomor': nomor,
-            'kondisi': kondisi,
-            'dipinjam': False
-        })
-        flash('Data Proyektor Berhasil Ditambahkan')
 
-        return redirect(url_for('views.input_proyektor'))
+        if not user.cek_proyektor(user.get_collection('proyektor'), id_proyektor, nama, nomor, kondisi) :
+            user.add_document('proyektor', random_string, {
+                'id': random_string,
+                'id_proyektor': id_proyektor,
+                'nama': nama.rstrip(),
+                'nomor': nomor,
+                'kondisi': kondisi,
+                'dipinjam': False
+            })
+            flash('Data Proyektor Berhasil Ditambahkan', category='success')
+            return redirect(url_for('views.input_proyektor'))
+        else:
+            flash(f'Tidak Dapat Menambahkan Proyektor!. {nama} telah tersedia', category='error')
+            # flash()
+            return redirect(url_for('views.input_proyektor'))
+            
     return render_template('input_proyektor.html', active='proyektor')
 
 

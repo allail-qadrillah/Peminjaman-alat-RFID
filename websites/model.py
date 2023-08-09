@@ -39,6 +39,15 @@ class util():
 class User(util):
     def __init__(self) -> None:
         pass
+    
+    def cek_proyektor(self, data_proyektor, id_proyektor, nama, nomor, kondisi):
+        """mengembalikan True jika proyektor telah ada"""
+        status = False
+        for proyektor in data_proyektor:
+            if proyektor.get('id_proyektor') == id_proyektor and proyektor.get('nama') == nama and proyektor.get('kondisi') == kondisi and proyektor.get('nomor') == nomor:
+                status = True
+                break
+        return status
 
     def add_document(self, collection, document, data_document):
         return firestore.collection(collection).document(document).set(data_document)
