@@ -242,16 +242,19 @@ def input_matakuliah():
         nama = request.form['nama']
         kode = request.form['kode']
         sks = request.form['sks']
+        jurusan = request.form['jurusan']
         user.add_document('matakuliah', random_string, {
             'id': random_string,
             'nama': nama,
             'kode': kode,
-            'sks': sks
+            'sks': sks,
+            'jurusan': jurusan,
         })
         flash('Data Matakuliah Berhasil Ditambahkan')
 
         return redirect(url_for('views.input_matakuliah'))
-    return render_template('input_matakuliah.html', active='matakuliah')
+    return render_template('input_matakuliah.html', active='matakuliah',
+                            data_jurusan = user.get_collection('jurusan'))
 
 
 @views.route('/data-matakuliah', methods=['POST', 'GET'])
@@ -401,18 +404,20 @@ def input_peminjaman():
     mahasiswa = user.find_mahasiswa() if user.find_mahasiswa() is not None else {
         'mahasiswa': ''}
     user.update_value_rtdb('id', "0")
-
+    print(mahasiswa)
+    print(user.get_matakuliah_from_jurusan(mahasiswa.get('id_kartu')))
     return render_template('input_peminjaman.html', active='peminjaman',
                            jumlah_peminjam=len(
                                user.get_collection('peminjaman')),
                            data_proyektor=proyektor_tersedia,
-                           data_matakuliah=user.get_collection('matakuliah'),
+                           data_matakuliah=user.get_matakuliah_from_jurusan(mahasiswa.get('id_kartu')),
+                           jurusan = mahasiswa.get('nama_jurusan'),
                            dosen=user.get_collection('matakuliah'),
                            data_ruang=user.get_collection('ruang'),
                            data_dosen=user.get_collection('dosen'),
                            mahasiswa=mahasiswa,
                            komponen_pendukung=user.get_collection(
-                               'komponen_pendukung')
+                               'komponen_pendukung'),
                            )
 
 

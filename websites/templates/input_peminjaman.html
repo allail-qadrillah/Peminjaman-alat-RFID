@@ -103,10 +103,14 @@
         </div>
 
         <div class="form-group">
+          <label for="exampleSelectRounded0">Nama Jurusan</label>
+          <input type="text" name="jurusan" class="form-control" value="{{ jurusan }}" readonly>
+
+        <div class="form-group">
           <label for="exampleSelectRounded0">Nama Matakuliah</label>
           <select name="matakuliah" class="custom-select rounded-0" id="exampleSelectRounded0">
             {% for matakuliah in data_matakuliah %}
-            <option>{{ matakuliah['nama'] }}</option>
+            <option>{{ matakuliah }}</option>
             {% endfor %}
           </select>
 

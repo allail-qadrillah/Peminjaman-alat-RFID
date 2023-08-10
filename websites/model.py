@@ -39,6 +39,18 @@ class util():
 class User(util):
     def __init__(self) -> None:
         pass
+
+    def get_matakuliah_from_jurusan(self, id_kartu):
+        list_matakuliah = []
+        founded = False
+        for mahasiswa in self.get_collection('mahasiswa'):
+            if not founded:
+                if mahasiswa.get('id_kartu') == id_kartu:
+                    founded = True
+                    for matakuliah in self.get_collection('matakuliah'):
+                        if matakuliah.get('jurusan') == mahasiswa.get('nama_jurusan'):
+                            list_matakuliah.append(matakuliah.get('nama'))
+        return list_matakuliah
     
     def cek_proyektor(self, data_proyektor, id_proyektor, nama, nomor, kondisi):
         """mengembalikan True jika proyektor telah ada"""

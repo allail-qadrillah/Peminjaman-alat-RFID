@@ -37,6 +37,15 @@
           placeholder="masukkan kode matakuliah">
       </div>
       <div class="form-group">
+        <label for="exampleSelectRounded0">Nama Jurusan</label>
+        <select name="jurusan" class="custom-select rounded-0" id="exampleSelectRounded0">
+          <option value="" selected disabled>-- Pilih salah satu --</option>
+          {% for jurusan in data_jurusan %}
+          <option>{{ jurusan['nama'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
         <label for="exampleInputEmail1">Nama Mata Kuliah</label>
         <input type="text" name="nama" class="form-control" id="exampleInputEmail1" placeholder="masukkan nama matakuliah">
       </div>
